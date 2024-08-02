@@ -60,43 +60,41 @@ body {
   left: 0;
   width: 120%;
   height: 100%;
-  background-image: url('./parallax-background/junglepng/plx-5.png'),
-                    url('./parallax-background/junglepng/plx-4.png'),
-                    url('./parallax-background/junglepng/plx-3.png'),
-                    url('./parallax-background/junglepng/plx-2.png'),
-                    url('./parallax-background/junglepng/plx-1.png');
-  
-                    /* WE CAN ALSO USE CONTAIN */
-  background-size: fill ;
+  background-image: 
+    url('./parallax-background/junglepng/plx-5.png'), /* Backmost layer */
+    url('./parallax-background/junglepng/plx-4.png'), /* Second layer */
+    url('./parallax-background/junglepng/plx-3.png'), /* Third layer */
+    url('./parallax-background/junglepng/plx-2.png'), /* Fourth layer */
+    url('./parallax-background/junglepng/plx-1.png'); /* Front layer */
+  background-size: fill;
   background-position: center;
-  z-index: -1; 
-  /* aspect-ratio: 16/9; */
   background-repeat: repeat-x;
+  z-index: -1;
 }
 
 .background.forward {
-  animation: moveBackgroundForward 5s linear infinite;
+  animation: moveBackgroundForward 7s linear infinite;
 }
 
 .background.reverse {
-  animation: moveBackgroundReverse 5s linear infinite;
+  animation: moveBackgroundReverse 7s linear infinite;
 }
 
 @keyframes moveBackgroundForward {
   from {
-    background-position: center;
+    background-position: 0% center;
   }
   to {
-    background-position: center, 0%;
+    background-position: 100% center;
   }
 }
 
 @keyframes moveBackgroundReverse {
   from {
-    background-position: center, 0%;
+    background-position: 100% center;
   }
   to {
-    background-position: center;
+    background-position: 0% center;
   }
 }
 

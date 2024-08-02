@@ -3,28 +3,32 @@ import './character.css'; // Adjust the path if necessary
 
 function CharacterComponent() {
   const [direction, setDirection] = useState('up'); // Default direction is "up"
-  const [bgAnimation, setBgAnimation] = useState(''); // Default background direction
+  const [bgAnimation, setBgAnimation] = useState(''); // Default background animation
+  const [charAnimation, setCharAnimation] = useState(''); // Character animation direction
   const [isPlaying, setIsPlaying] = useState(false); // Manage music play state
   const [isFirstPlay, setIsFirstPlay] = useState(true); // Track first play to handle autoplay restrictions
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Reset direction and background animation after 5 seconds
+      // Reset direction and animations after 5 seconds
       setDirection('up');
       setBgAnimation('');
+      setCharAnimation('');
     }, 5000); // 5000 milliseconds = 5 seconds
 
     return () => clearTimeout(timer); // Clear the timer if the component unmounts
-  }, [direction, bgAnimation]); // Dependency array ensures timer restarts on state change
+  }, [direction, bgAnimation, charAnimation]); // Dependency array ensures timer restarts on state change
 
-  const handleDirectionChange = (charDirection, bgDirection) => {
+  const handleDirectionChange = (charDirection, bgDirection, charAnimDirection) => {
     setDirection(charDirection);
     setBgAnimation(bgDirection);
+    setCharAnimation(charAnimDirection);
 
     // Set a timeout to reset state after 5 seconds
     setTimeout(() => {
       setDirection('up');
       setBgAnimation('');
+      setCharAnimation('');
     }, 5000);
   };
 
@@ -38,14 +42,14 @@ function CharacterComponent() {
       });
     }
     setIsPlaying(!isPlaying);
-    setIsFirstPlay(false); // User has interacted, no need for initial play button
+    setIsFirstPlay(false);
   };
 
   return (
     <div>
       <div className={`background ${bgAnimation}`}></div>
       <div className="app-container">
-        <div className="Character">
+        <div className={`Character ${charAnimation}`}>
           <img
             className="Character_shadow pixelart"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacterShadow.png"
@@ -59,8 +63,8 @@ function CharacterComponent() {
           />
         </div>
         <div className="controls">
-          <button onClick={() => handleDirectionChange('left', 'reverse')}>Option A</button>
-          <button onClick={() => handleDirectionChange('right', 'forward')}>Option B</button>
+          <button onClick={() => handleDirectionChange('left', 'forward', 'reverse')}>Option A</button>
+          <button onClick={() => handleDirectionChange('right', 'reverse', 'forward')}>Option B</button>
           {isFirstPlay ? (
             <button onClick={toggleMusic}>Start Music</button>
           ) : (
