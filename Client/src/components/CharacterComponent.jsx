@@ -14,7 +14,7 @@ function CharacterComponent() {
       setDirection('up');
       setBgAnimation('');
       setCharAnimation('');
-    }, 5000); // 5000 milliseconds = 5 seconds
+    }, 10000); // 5000 milliseconds = 5 seconds
 
     return () => clearTimeout(timer); // Clear the timer if the component unmounts
   }, [direction, bgAnimation, charAnimation]); // Dependency array ensures timer restarts on state change
@@ -29,7 +29,7 @@ function CharacterComponent() {
       setDirection('up');
       setBgAnimation('');
       setCharAnimation('');
-    }, 5000);
+    }, 10000);
   };
 
   const toggleMusic = () => {
@@ -45,6 +45,17 @@ function CharacterComponent() {
     setIsFirstPlay(false);
   };
 
+  // // const getCharacterImageSrc = () => {
+  //   switch (direction) {
+  //     case 'left':
+  //       return '/Characters/walk-left-skel.png'; // Replace with the path to your left-facing image
+  //     case 'right':
+  //       return '/Characters/walk-right-skel.png'; // Replace with the path to your right-facing image
+  //     default:
+  //       return '/Characters/idle-skel.png'; // Replace with the path to your up-facing image
+  //   }
+  // };
+
   return (
     <div>
       <div className={`background ${bgAnimation}`}></div>
@@ -58,7 +69,7 @@ function CharacterComponent() {
           <img
             id="character"
             className={`Character_spritesheet pixelart face-${direction}`}
-            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
+            src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png' // Ensure the path is correct
             alt="Character"
           />
         </div>

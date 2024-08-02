@@ -73,11 +73,11 @@ body {
 }
 
 .background.forward {
-  animation: moveBackgroundForward 7s linear infinite;
+  animation: moveBackgroundForward 10s linear infinite;
 }
 
 .background.reverse {
-  animation: moveBackgroundReverse 7s linear infinite;
+  animation: moveBackgroundReverse 10s linear infinite;
 }
 
 @keyframes moveBackgroundForward {
