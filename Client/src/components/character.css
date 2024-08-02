@@ -14,6 +14,7 @@ body {
   overflow: hidden;
   position: relative;
   top: 50px; 
+  left: 100px;
 }
 
 .Character_spritesheet {
@@ -105,9 +106,31 @@ body {
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  
 }
 
 .controls {
   position: absolute;
   bottom: 20px; /* Position controls at the bottom */
+}
+
+/* Second Character Styling */
+.SecondCharacter {
+  width: calc(48px * var(--pixel-size));
+  height: calc(48px * var(--pixel-size));
+  overflow: hidden;
+  position: relative;
+  right: -1000px; /* Start off-screen */
+  top: 30px; /* Adjust as needed */
+  transition: transform 4s ease-in-out;
+}
+
+.SecondCharacter.enter {
+  transform: translateX(-1000px); /* Move into view */
+}
+
+.SecondCharacter_spritesheet {
+  animation: moveSpritesheet 1s steps(4) infinite;
+  width: 2000px;
+  position: absolute;
 }

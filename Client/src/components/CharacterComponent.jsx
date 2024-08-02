@@ -2,34 +2,32 @@ import React, { useState, useEffect } from 'react';
 import './character.css'; // Adjust the path if necessary
 
 function CharacterComponent() {
-  const [direction, setDirection] = useState('up'); // Default direction is "up"
-  const [bgAnimation, setBgAnimation] = useState(''); // Default background animation
-  const [charAnimation, setCharAnimation] = useState(''); // Character animation direction
-  const [isPlaying, setIsPlaying] = useState(false); // Manage music play state
-  const [isFirstPlay, setIsFirstPlay] = useState(true); // Track first play to handle autoplay restrictions
+  const [direction, setDirection] = useState('up');
+  const [bgAnimation, setBgAnimation] = useState('');
+  const [charAnimation, setCharAnimation] = useState('');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isFirstPlay, setIsFirstPlay] = useState(true);
+  const [secondCharIn, setSecondCharIn] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      // Reset direction and animations after 5 seconds
-      setDirection('up');
-      setBgAnimation('');
-      setCharAnimation('');
-    }, 10000); // 5000 milliseconds = 5 seconds
-
-    return () => clearTimeout(timer); // Clear the timer if the component unmounts
-  }, [direction, bgAnimation, charAnimation]); // Dependency array ensures timer restarts on state change
-
-  const handleDirectionChange = (charDirection, bgDirection, charAnimDirection) => {
+  const handleDirectionChange = (charDirection, bgDirection, charAnimDirection, triggerSecondChar = false) => {
     setDirection(charDirection);
     setBgAnimation(bgDirection);
     setCharAnimation(charAnimDirection);
 
-    // Set a timeout to reset state after 5 seconds
+    // Trigger the second character's movement only if triggerSecondChar is true
+    if (triggerSecondChar) {
+      setSecondCharIn(true);
+    } else {
+      setSecondCharIn(false);
+    }
+
+    // Reset states after 5 seconds
     setTimeout(() => {
       setDirection('up');
       setBgAnimation('');
       setCharAnimation('');
-    }, 10000);
+      setSecondCharIn(false); // Reset second character's position
+    }, 5000);
   };
 
   const toggleMusic = () => {
@@ -45,17 +43,6 @@ function CharacterComponent() {
     setIsFirstPlay(false);
   };
 
-  // // const getCharacterImageSrc = () => {
-  //   switch (direction) {
-  //     case 'left':
-  //       return '/Characters/walk-left-skel.png'; // Replace with the path to your left-facing image
-  //     case 'right':
-  //       return '/Characters/walk-right-skel.png'; // Replace with the path to your right-facing image
-  //     default:
-  //       return '/Characters/idle-skel.png'; // Replace with the path to your up-facing image
-  //   }
-  // };
-
   return (
     <div>
       <div className={`background ${bgAnimation}`}></div>
@@ -69,13 +56,24 @@ function CharacterComponent() {
           <img
             id="character"
             className={`Character_spritesheet pixelart face-${direction}`}
-            src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png' // Ensure the path is correct
+            src="Characters/DemoRpgCharacter.png" // Ensure the path is correct
             alt="Character"
           />
         </div>
+
+        {/* Second Character (Skeleton) */}
+        <div className={`SecondCharacter ${secondCharIn ? 'enter' : ''}`}>
+          <img
+            id="second-character"
+            className="SecondCharacter_spritesheet pixelart"
+            src="Characters/attack-left.png" // Ensure the path is correct
+            alt="Second Character"
+          />
+        </div>
+
         <div className="controls">
           <button onClick={() => handleDirectionChange('left', 'forward', 'reverse')}>Option A</button>
-          <button onClick={() => handleDirectionChange('right', 'reverse', 'forward')}>Option B</button>
+          <button onClick={() => handleDirectionChange('right', 'reverse', 'forward', true)}>Option B</button>
           {isFirstPlay ? (
             <button onClick={toggleMusic}>Start Music</button>
           ) : (
