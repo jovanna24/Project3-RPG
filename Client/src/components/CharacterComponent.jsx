@@ -5,6 +5,7 @@ function CharacterComponent() {
   const [direction, setDirection] = useState('up'); // Default direction is "up"
   const [bgAnimation, setBgAnimation] = useState(''); // Default background direction
   const [isPlaying, setIsPlaying] = useState(false); // Manage music play state
+  const [isFirstPlay, setIsFirstPlay] = useState(true); // Track first play to handle autoplay restrictions
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -32,9 +33,12 @@ function CharacterComponent() {
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play();
+      audio.play().catch((error) => {
+        console.log('Music playback prevented by the browser:', error);
+      });
     }
     setIsPlaying(!isPlaying);
+    setIsFirstPlay(false); // User has interacted, no need for initial play button
   };
 
   return (
@@ -57,10 +61,17 @@ function CharacterComponent() {
         <div className="controls">
           <button onClick={() => handleDirectionChange('left', 'reverse')}>Option A</button>
           <button onClick={() => handleDirectionChange('right', 'forward')}>Option B</button>
-          <button onClick={toggleMusic}>{isPlaying ? 'Pause Music' : 'Play Music'}</button>
+          {isFirstPlay ? (
+            <button onClick={toggleMusic}>Start Music</button>
+          ) : (
+            <button onClick={toggleMusic}>{isPlaying ? 'Pause Music' : 'Play Music'}</button>
+          )}
         </div>
       </div>
-      <audio id="background-music" src="https://www.google.com/search?q=jumanji+jungle+sounds&sca_esv=9267af3241730e66&sca_upv=1&rlz=1C1ONGR_enUS1114US1114&biw=1080&bih=1785&tbm=vid&ei=wISsZvPCJt68kPIPsZamqAE&ved=0ahUKEwjzopHl3tWHAxVeHkQIHTGLCRUQ4dUDCA4&uact=5&oq=jumanji+jungle+sounds&gs_lp=Eg1nd3Mtd2l6LXZpZGVvIhVqdW1hbmppIGp1bmdsZSBzb3VuZHMyBRAhGKABMgUQIRigATIFECEYoAEyBRAhGKABMgUQIRifBTIFECEYnwUyBRAhGJ8FMgUQIRifBTIFECEYnwUyBRAhGJ8FSM0mUL0FWO0lcAJ4AJABAJgBSqABowqqAQIyMrgBA8gBAPgBAZgCGKACyAqoAgDCAgYQABgWGB7CAgsQABiABBiGAxiKBcICCBAAGIAEGKIEwgIKEAAYgAQYQxiKBcICCxAAGIAEGJECGIoFwgIOEAAYgAQYsQMYgwEYigXCAggQABiABBixA8ICDRAAGIAEGLEDGEMYigXCAg4QABiABBiRAhixAxiKBcICCxAAGIAEGLEDGIMBwgIFEAAYgATCAggQABgWGAoYHsICCBAAGKIEGIkFmAMBiAYBkgcCMjSgB7SLAQ&sclient=gws-wiz-video#fpstate=ive&vld=cid:fb5084ff,vid:kEQ6bFE5cPs,st:0" loop />
+      <audio id="background-music" loop>
+        <source src='/music/Jumanji.mp3' type='audio/mp3' />
+        Your browser does not support the audio element.
+      </audio>
     </div>
   );
 }
