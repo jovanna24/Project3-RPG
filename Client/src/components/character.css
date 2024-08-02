@@ -1,0 +1,115 @@
+/* src/character.css */
+:root {
+  --pixel-size: 4;
+}
+
+body {
+  margin: 0;
+  overflow: hidden; 
+}
+
+.Character {
+  width: calc(32px * var(--pixel-size));
+  height: calc(32px * var(--pixel-size));
+  overflow: hidden;
+  position: relative;
+  top: 50px; 
+}
+
+.Character_spritesheet {
+  animation: moveSpritesheet 1s steps(4) infinite;
+  width: calc(128px * var(--pixel-size));
+  position: absolute;
+}
+
+.Character_shadow {
+  position: absolute;
+  width: calc(32px * var(--pixel-size));
+  height: calc(32px * var(--pixel-size));
+}
+
+.pixelart {
+  image-rendering: pixelated;
+}
+
+.face-right {
+  top: calc(-32px * var(--pixel-size)); 
+}
+
+.face-down {
+  top: calc(-64px * var(--pixel-size)); 
+}
+
+.face-left {
+  top: calc(-96px * var(--pixel-size)); 
+}
+
+@keyframes moveSpritesheet {
+  from {
+    transform: translate3d(0px, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* Background styling */
+.background {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 120%;
+  height: 100%;
+  background-image: url('./parallax-background/junglepng/plx-5.png'),
+                    url('./parallax-background/junglepng/plx-4.png'),
+                    url('./parallax-background/junglepng/plx-3.png'),
+                    url('./parallax-background/junglepng/plx-2.png'),
+                    url('./parallax-background/junglepng/plx-1.png');
+  
+                    /* WE CAN ALSO USE CONTAIN */
+  background-size: fill ;
+  background-position: center;
+  z-index: -1; 
+  /* aspect-ratio: 16/9; */
+  background-repeat: repeat-x;
+}
+
+.background.forward {
+  animation: moveBackgroundForward 5s linear infinite;
+}
+
+.background.reverse {
+  animation: moveBackgroundReverse 5s linear infinite;
+}
+
+@keyframes moveBackgroundForward {
+  from {
+    background-position: center;
+  }
+  to {
+    background-position: center, 0%;
+  }
+}
+
+@keyframes moveBackgroundReverse {
+  from {
+    background-position: center, 0%;
+  }
+  to {
+    background-position: center;
+  }
+}
+
+.app-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px; /* Position controls at the bottom */
+}
