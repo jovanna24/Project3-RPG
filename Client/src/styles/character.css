@@ -1,0 +1,50 @@
+.Character {
+  width: calc(32px * var(--pixel-size));
+  height: calc(32px * var(--pixel-size));
+  overflow: hidden;
+  position: relative;
+  top: 50px;
+  left: 150px;
+}
+
+.Character.dead {
+  width: calc(32px * var(--pixel-size));
+  height: calc(32px * var(--pixel-size));
+  overflow: hidden; /* Changed to visible to show the dead character */
+  position: relative;
+  top: 50px;
+  left: 150px; /* Adjust this to ensure the dead character is within view */
+}
+
+.Character.dead .Character_spritesheet {
+  width: calc(76px * var(--pixel-size));
+  position: relative;
+  animation: moveSpritesheet 3s steps(3) forwards; /* Adjusted for dead animation */
+  left: 150px; /* Ensure this aligns correctly */
+}
+
+.Character_spritesheet {
+  animation: moveSpritesheet 1s steps(8) infinite;
+  width: calc(200px * var(--pixel-size));
+  position: absolute;
+}
+
+.Character_shadow {
+  position: absolute;
+  width: calc(32px * var(--pixel-size));
+  height: calc(32px * var(--pixel-size));
+}
+
+.pixelart {
+  image-rendering: pixelated;
+}
+
+/* Keyframes for sprite sheet movement */
+@keyframes moveSpritesheet {
+  from {
+    transform: translate3d(0px, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
