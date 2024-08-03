@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './character.css'; // Adjust the path if necessary
+import React, { useState, useEffect, useRef } from 'react';
+import '../styles/variables.css';
+import '../styles/global.css';
+import '../styles/character.css';
+import '../styles/background.css';
+import '../styles/secondCharacter.css';
+import '../styles/controls.css';
+
 
 function CharacterComponent() {
   const [direction, setDirection] = useState('idle');
@@ -8,7 +14,10 @@ function CharacterComponent() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFirstPlay, setIsFirstPlay] = useState(true);
   const [secondCharIn, setSecondCharIn] = useState(false);
-  const [imageSrc, setImageSrc] = useState('Characters/idle.png'); // Default idle image
+  const [imageSrc, setImageSrc] = useState('/Characters/idle.png'); // Default idle image
+  const [isDead, setIsDead] = useState(false); // New state to manage dead state
+  const characterRef = useRef(null);
+  const secondCharacterRef = useRef(null);
 
   useEffect(() => {
     // Automatically stop the game after 10 seconds
@@ -20,50 +29,46 @@ function CharacterComponent() {
   }, []);
 
   useEffect(() => {
-    const handleAnimationEnd = () => {
-      // Reset to the original position after animations end
-      handleStop();
-    };
+    const checkCollision = () => {
+      const characterElem = characterRef.current;
+      const secondCharacterElem = secondCharacterRef.current;
 
-    const backgroundElement = document.querySelector('.background');
-    const characterElement = document.querySelector('.Character');
-    const secondCharacterElement = document.querySelector('.SecondCharacter');
+      if (characterElem && secondCharacterElem) {
+        const characterRect = characterElem.getBoundingClientRect();
+        const secondCharacterRect = secondCharacterElem.getBoundingClientRect();
 
-    if (backgroundElement) {
-      backgroundElement.addEventListener('animationend', handleAnimationEnd);
-    }
-    if (characterElement) {
-      characterElement.addEventListener('animationend', handleAnimationEnd);
-    }
-    if (secondCharacterElement) {
-      secondCharacterElement.addEventListener('transitionend', handleAnimationEnd);
-    }
-
-    return () => {
-      if (backgroundElement) {
-        backgroundElement.removeEventListener('animationend', handleAnimationEnd);
-      }
-      if (characterElement) {
-        characterElement.removeEventListener('animationend', handleAnimationEnd);
-      }
-      if (secondCharacterElement) {
-        secondCharacterElement.removeEventListener('transitionend', handleAnimationEnd);
+        if (
+          characterRect.left < secondCharacterRect.right &&
+          characterRect.right > secondCharacterRect.left &&
+          characterRect.top < secondCharacterRect.bottom &&
+          characterRect.bottom > secondCharacterRect.top
+        ) {
+          setIsDead(true); // Trigger the dead state
+          setImageSrc('/Characters/dead.png'); // Change to dead image
+        }
       }
     };
-  }, []);
+
+    // Check collision periodically
+    const interval = setInterval(checkCollision, 100);
+
+    return () => clearInterval(interval); // Cleanup interval if component unmounts
+  }, [secondCharIn]);
 
   const handleDirectionChange = (newDirection, showSecondChar = false) => {
+    if (isDead) return; // Prevent any actions if the character is dead
+  
     setDirection(newDirection);
     switch (newDirection) {
       case 'left':
-        setImageSrc('Characters/run-left.png'); // Image for moving left
-        setBgAnimation('forward'); // Set the background animation to forward
-        setCharAnimation('move'); // Set the character animation to move
+        setImageSrc('/Characters/run-left.png'); // Image for moving left
+        setBgAnimation('forward');
+        setCharAnimation('move');
         break;
       case 'right':
-        setImageSrc('Characters/run-right.png'); // Image for moving right
-        setBgAnimation('reverse'); // Set the background animation to reverse
-        setCharAnimation('move'); // Set the character animation to move
+        setImageSrc('/Characters/run-right.png'); // Image for moving right
+        setBgAnimation('reverse');
+        setCharAnimation('move');
         if (showSecondChar) {
           setSecondCharIn(true); // Show the second character
         }
@@ -72,11 +77,17 @@ function CharacterComponent() {
         handleStop(); // Handle stopping
         break;
     }
+  
+    // Automatically set back to idle after running (e.g., 1 second delay)
+    setTimeout(() => {
+      handleStop();
+    }, 10000); // Adjust the time as needed
   };
+  
 
   const handleStop = () => {
     setDirection('idle');
-    setImageSrc('Characters/idle.png'); // Idle image
+    setImageSrc('/Characters/idle.png'); // Idle image
     setBgAnimation(''); // Stop background animation
     setCharAnimation(''); // Stop character animation
     setSecondCharIn(false); // Hide second character
@@ -95,11 +106,28 @@ function CharacterComponent() {
     setIsFirstPlay(false);
   };
 
+  const handleRestart = () => {
+    setIsDead(false); // Reset dead state
+    setDirection('idle');
+    setImageSrc('/Characters/idle.png'); // Reset to idle image
+    setBgAnimation(''); // Reset background animation
+    setCharAnimation(''); // Reset character animation
+    setSecondCharIn(false); // Hide second character
+    setIsFirstPlay(true); // Reset music state
+    setIsPlaying(false);
+    const audio = document.getElementById('background-music');
+    audio.pause(); // Stop the music
+    audio.currentTime = 0; // Reset music to start
+  };
+
   return (
     <div>
       <div className={`background ${bgAnimation}`}></div>
       <div className="app-container">
-        <div className={`Character ${charAnimation}`}>
+        <div
+          className={`Character ${charAnimation} ${isDead ? 'dead' : ''}`}
+          ref={characterRef}
+        >
           <img
             className="Character_shadow pixelart"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacterShadow.png"
@@ -114,22 +142,32 @@ function CharacterComponent() {
         </div>
 
         {/* Second Character (Skeleton) */}
-        <div className={`SecondCharacter ${secondCharIn ? 'enter' : ''}`}>
+        <div
+          className={`SecondCharacter ${secondCharIn ? 'enter' : ''}`}
+          ref={secondCharacterRef}
+        >
           <img
             id="second-character"
             className="SecondCharacter_spritesheet pixelart"
-            src="Characters/attack-left.png" // Ensure the path is correct
+            src="/Characters/attack-left.png" // Ensure the path is correct
             alt="Second Character"
           />
         </div>
 
         <div className="controls">
-          <button onClick={() => handleDirectionChange('left')}>Option A</button>
-          <button onClick={() => handleDirectionChange('right', true)}>Option B</button>
-          {isFirstPlay ? (
-            <button onClick={toggleMusic}>Start Music</button>
-          ) : (
-            <button onClick={toggleMusic}>{isPlaying ? 'Pause Music' : 'Play Music'}</button>
+          {!isDead && (
+            <>
+              <button onClick={() => handleDirectionChange('left')}>Option A</button>
+              <button onClick={() => handleDirectionChange('right', true)}>Option B</button>
+              {isFirstPlay ? (
+                <button onClick={toggleMusic}>Start Music</button>
+              ) : (
+                <button onClick={toggleMusic}>{isPlaying ? 'Pause Music' : 'Play Music'}</button>
+              )}
+            </>
+          )}
+          {isDead && (
+            <button onClick={handleRestart}>Restart</button>
           )}
         </div>
       </div>
