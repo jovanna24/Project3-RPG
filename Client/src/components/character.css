@@ -1,6 +1,5 @@
-/* src/character.css */
 :root {
-  --pixel-size: 4;
+  --pixel-size: 6;
 }
 
 body {
@@ -11,14 +10,15 @@ body {
 .Character {
   width: calc(32px * var(--pixel-size));
   height: calc(32px * var(--pixel-size));
-  overflow: hidden;
+  overflow: hidden; /* Changed to visible to show the character */
   position: relative;
-  top: 50px; 
+  top: 50px;
+  left: 200px;
 }
 
 .Character_spritesheet {
-  animation: moveSpritesheet 1s steps(4) infinite;
-  width: calc(128px * var(--pixel-size));
+  animation: moveSpritesheet 1s steps(8) infinite;
+  width: calc(200px * var(--pixel-size));
   position: absolute;
 }
 
@@ -33,15 +33,15 @@ body {
 }
 
 .face-right {
-  top: calc(-32px * var(--pixel-size)); 
+ 
 }
 
-.face-down {
-  top: calc(-64px * var(--pixel-size)); 
+.face-idle {
+  
 }
 
 .face-left {
-  top: calc(-96px * var(--pixel-size)); 
+   
 }
 
 @keyframes moveSpritesheet {
@@ -72,12 +72,15 @@ body {
   z-index: -1;
 }
 
+/* src/character.css */
+
+/* Define animation for background movement */
 .background.forward {
-  animation: moveBackgroundForward 10s linear infinite;
+  animation: moveBackgroundForward 10s linear;
 }
 
 .background.reverse {
-  animation: moveBackgroundReverse 10s linear infinite;
+  animation: moveBackgroundReverse 10s linear;
 }
 
 @keyframes moveBackgroundForward {
@@ -98,6 +101,7 @@ body {
   }
 }
 
+
 .app-container {
   position: relative;
   display: flex;
@@ -110,4 +114,25 @@ body {
 .controls {
   position: absolute;
   bottom: 20px; /* Position controls at the bottom */
+}
+
+/* Second Character Styling */
+.SecondCharacter {
+  width: calc(48px * var(--pixel-size));
+  height: calc(48px * var(--pixel-size));
+  overflow: hidden;
+  position: relative;
+  right: -600px; /* Start off-screen */
+  top: px; /* Adjust as needed */
+  transition: transform 4s ease-in-out;
+}
+
+.SecondCharacter.enter {
+  transform: translateX(-600px); /* Move into view */
+}
+
+.SecondCharacter_spritesheet {
+  animation: moveSpritesheet 1s steps(4) infinite;
+  width: 3000px;
+  position: absolute;
 }
