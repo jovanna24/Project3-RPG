@@ -2,32 +2,84 @@ import React, { useState, useEffect } from 'react';
 import './character.css'; // Adjust the path if necessary
 
 function CharacterComponent() {
-  const [direction, setDirection] = useState('up');
+  const [direction, setDirection] = useState('idle');
   const [bgAnimation, setBgAnimation] = useState('');
   const [charAnimation, setCharAnimation] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFirstPlay, setIsFirstPlay] = useState(true);
   const [secondCharIn, setSecondCharIn] = useState(false);
+  const [imageSrc, setImageSrc] = useState('Characters/idle.png'); // Default idle image
 
-  const handleDirectionChange = (charDirection, bgDirection, charAnimDirection, triggerSecondChar = false) => {
-    setDirection(charDirection);
-    setBgAnimation(bgDirection);
-    setCharAnimation(charAnimDirection);
+  useEffect(() => {
+    // Automatically stop the game after 10 seconds
+    const timer = setTimeout(() => {
+      handleStop();
+    }, 10000);
 
-    // Trigger the second character's movement only if triggerSecondChar is true
-    if (triggerSecondChar) {
-      setSecondCharIn(true);
-    } else {
-      setSecondCharIn(false);
+    return () => clearTimeout(timer); // Cleanup timer if component unmounts
+  }, []);
+
+  useEffect(() => {
+    const handleAnimationEnd = () => {
+      // Reset to the original position after animations end
+      handleStop();
+    };
+
+    const backgroundElement = document.querySelector('.background');
+    const characterElement = document.querySelector('.Character');
+    const secondCharacterElement = document.querySelector('.SecondCharacter');
+
+    if (backgroundElement) {
+      backgroundElement.addEventListener('animationend', handleAnimationEnd);
+    }
+    if (characterElement) {
+      characterElement.addEventListener('animationend', handleAnimationEnd);
+    }
+    if (secondCharacterElement) {
+      secondCharacterElement.addEventListener('transitionend', handleAnimationEnd);
     }
 
-    // Reset states after 5 seconds
-    setTimeout(() => {
-      setDirection('up');
-      setBgAnimation('');
-      setCharAnimation('');
-      setSecondCharIn(false); // Reset second character's position
-    }, 5000);
+    return () => {
+      if (backgroundElement) {
+        backgroundElement.removeEventListener('animationend', handleAnimationEnd);
+      }
+      if (characterElement) {
+        characterElement.removeEventListener('animationend', handleAnimationEnd);
+      }
+      if (secondCharacterElement) {
+        secondCharacterElement.removeEventListener('transitionend', handleAnimationEnd);
+      }
+    };
+  }, []);
+
+  const handleDirectionChange = (newDirection, showSecondChar = false) => {
+    setDirection(newDirection);
+    switch (newDirection) {
+      case 'left':
+        setImageSrc('Characters/run-left.png'); // Image for moving left
+        setBgAnimation('forward'); // Set the background animation to forward
+        setCharAnimation('move'); // Set the character animation to move
+        break;
+      case 'right':
+        setImageSrc('Characters/run-right.png'); // Image for moving right
+        setBgAnimation('reverse'); // Set the background animation to reverse
+        setCharAnimation('move'); // Set the character animation to move
+        if (showSecondChar) {
+          setSecondCharIn(true); // Show the second character
+        }
+        break;
+      default:
+        handleStop(); // Handle stopping
+        break;
+    }
+  };
+
+  const handleStop = () => {
+    setDirection('idle');
+    setImageSrc('Characters/idle.png'); // Idle image
+    setBgAnimation(''); // Stop background animation
+    setCharAnimation(''); // Stop character animation
+    setSecondCharIn(false); // Hide second character
   };
 
   const toggleMusic = () => {
@@ -56,7 +108,7 @@ function CharacterComponent() {
           <img
             id="character"
             className={`Character_spritesheet pixelart face-${direction}`}
-            src="Characters/DemoRpgCharacter.png" // Ensure the path is correct
+            src={imageSrc}
             alt="Character"
           />
         </div>
@@ -72,8 +124,8 @@ function CharacterComponent() {
         </div>
 
         <div className="controls">
-          <button onClick={() => handleDirectionChange('left', 'forward', 'reverse')}>Option A</button>
-          <button onClick={() => handleDirectionChange('right', 'reverse', 'forward', true)}>Option B</button>
+          <button onClick={() => handleDirectionChange('left')}>Option A</button>
+          <button onClick={() => handleDirectionChange('right', true)}>Option B</button>
           {isFirstPlay ? (
             <button onClick={toggleMusic}>Start Music</button>
           ) : (
