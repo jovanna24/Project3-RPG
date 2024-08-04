@@ -5,7 +5,7 @@ import '../styles/character.css';
 import '../styles/background.css';
 import '../styles/secondCharacter.css';
 import '../styles/controls.css';
-
+import DeathScreen from './DeathScreen'; // Import the DeathScreen component
 
 function CharacterComponent() {
   const [direction, setDirection] = useState('idle');
@@ -57,7 +57,7 @@ function CharacterComponent() {
 
   const handleDirectionChange = (newDirection, showSecondChar = false) => {
     if (isDead) return; // Prevent any actions if the character is dead
-  
+ 
     setDirection(newDirection);
     switch (newDirection) {
       case 'left':
@@ -77,13 +77,12 @@ function CharacterComponent() {
         handleStop(); // Handle stopping
         break;
     }
-  
+ 
     // Automatically set back to idle after running (e.g., 1 second delay)
     setTimeout(() => {
       handleStop();
     }, 10000); // Adjust the time as needed
   };
-  
 
   const handleStop = () => {
     setDirection('idle');
@@ -166,11 +165,9 @@ function CharacterComponent() {
               )}
             </>
           )}
-          {isDead && (
-            <button onClick={handleRestart}>Restart</button>
-          )}
         </div>
       </div>
+      {isDead && <DeathScreen onRestart={handleRestart} />}
       <audio id="background-music" loop>
         <source src='/music/Jumanji.mp3' type='audio/mp3' />
         Your browser does not support the audio element.
