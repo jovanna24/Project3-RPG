@@ -1,7 +1,7 @@
 /* controls.css */
 .controls {
     position: absolute;
-    bottom: 20px; /* Position controls at the bottom */
+    top: 600px; /* Position controls at the bottom */
   }
   
   .controls button {

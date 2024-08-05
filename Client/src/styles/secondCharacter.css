@@ -1,21 +1,30 @@
 /* secondCharacter.css */
 .SecondCharacter {
-    width: calc(48px * var(--pixel-size));
-    height: calc(48px * var(--pixel-size));
-    overflow: hidden;
-    position: relative;
-    right: -1100px;
-    top: px;
-    transition: transform 4s ease-in-out;
-  }
-  
-  .SecondCharacter.enter {
-    transform: translateX(-1100px);
-  }
-  
-  .SecondCharacter_spritesheet {
-    animation: moveSpritesheet 1s steps(4) infinite;
-    width: 3000px;
-    position: absolute;
-  }
-  
+  width: calc(48px * var(--pixel-size));
+  height: calc(48px * var(--pixel-size));
+  overflow: hidden;
+  position: absolute; /* Ensure proper positioning */
+  transition: transform 4s ease-in-out;
+}
+
+.SecondCharacter.right {
+  left: -300px; /* Start from the left for the right-facing skeleton */
+}
+
+.SecondCharacter.left {
+  right: -300px; /* Start from the right for the left-facing skeleton */
+}
+
+.SecondCharacter.enter.right {
+  transform: translateX(1100px); /* Move to final position from left */
+}
+
+.SecondCharacter.enter.left {
+  transform: translateX(-1100px); /* Move to final position from right */
+}
+
+.SecondCharacter_spritesheet {
+  animation: moveSpritesheet 1s steps(4) infinite;
+  width: 3000px;
+  position: absolute;
+}
