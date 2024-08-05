@@ -1,28 +1,40 @@
 import './Home.css';
-import MainMenu from '../../components/MainMenu';
+import React, { useState } from 'react';
+import '../../styles/global.css';
+import '../../styles/variables.css';
+import '../../styles/global.css';
+import '../../styles/character.css';
+import '../../styles/background.css';
+import '../../styles/secondCharacter.css';
+import '../../styles/controls.css';
+import CharacterComponent from '../../components/CharacterComponent';
+import MainMenu from '../../components/MainMenu'; // Import your MainMenu component
+import { Link } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 
 
 const Home = () => {
 
-  const [isGameStarted, setIsGameStarted] = useState(false);
+  const [showMainMenu, setShowMainMenu] = useState(true);
 
-  const startGame = () => {
-    setIsGameStarted(true);
+  const handleStartGame = () => {
+    setShowMainMenu(false); // Hide the main menu when starting the game
   };
 
-  const goToMainMenu = () => {
-    setIsGameStarted(false);
+  const handleReturnToMenu = () => {
+    setShowMainMenu(true); // Show the main menu
   };
+  
 
   return (
-    <div className="home">
-      {!isGameStarted ? (
-        <MainMenu onStart={startGame} />
+    <div className="App">
+      {showMainMenu ? (
+        <MainMenu onStartGame={handleStartGame} />
       ) : (
-        <CharacterComponent onGameOver={goToMainMenu} />
+        <CharacterComponent onReturnToMenu={handleReturnToMenu} />
       )}
     </div>
-  );    
+  );
 }
 
 export default Home
