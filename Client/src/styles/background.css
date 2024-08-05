@@ -1,0 +1,45 @@
+/* background.css */
+.background {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 120%;
+    height: 100%;
+    background-image: 
+      url('../components/parallax-background/junglepng/plx-5.png'),
+      url('../components/parallax-background/junglepng/plx-4.png'),
+      url('../components/parallax-background/junglepng/plx-3.png'),
+      url('../components/parallax-background/junglepng/plx-2.png'),
+      url('../components/parallax-background/junglepng/plx-1.png');
+    background-size: fill;
+    background-position: center;
+    background-repeat: repeat-x;
+    z-index: -1;
+  }
+  
+  .background.forward {
+    animation: moveBackgroundForward 10s linear;
+  }
+  
+  .background.reverse {
+    animation: moveBackgroundReverse 10s linear;
+  }
+  
+  @keyframes moveBackgroundForward {
+    from {
+      background-position: 0% center;
+    }
+    to {
+      background-position: 100% center;
+    }
+  }
+  
+  @keyframes moveBackgroundReverse {
+    from {
+      background-position: 100% center;
+    }
+    to {
+      background-position: 0% center;
+    }
+  }
+  
