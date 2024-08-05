@@ -1,14 +1,14 @@
-// src/components/MainMenu.js
+// src/components/MainMenu.jsx
 import React from 'react';
-import '../styles/mainMenu.css'; // Ensure you have the appropriate CSS
+import '../styles/mainMenu.css'; // Create this CSS file for styling
 
-const MainMenu = ({ onStart }) => {
+function MainMenu({ onStartGame }) {
   return (
     <div className="main-menu">
-      <h1>Welcome to the Game</h1>
-      <button onClick={onStart}>Start Game</button>
+      <h1>Welcome to the Game!</h1>
+      <button onClick={onStartGame}>Start Game</button>
     </div>
   );
-};
+}
 
 export default MainMenu;
