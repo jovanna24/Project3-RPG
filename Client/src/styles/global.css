@@ -1,7 +1,6 @@
 /* global.css */
 body {
     margin: 0;
-    overflow: hidden; 
   }
   
   .app-container {
@@ -9,7 +8,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     width: 100vw;
+    z-index: 1;
+    padding: 200px 0 400px;
   }
   

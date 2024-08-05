@@ -1,6 +1,5 @@
 import './Home.css';
 import React, { useState } from 'react';
-import '../../styles/global.css';
 import '../../styles/variables.css';
 import '../../styles/global.css';
 import '../../styles/character.css';
@@ -8,9 +7,7 @@ import '../../styles/background.css';
 import '../../styles/secondCharacter.css';
 import '../../styles/controls.css';
 import CharacterComponent from '../../components/CharacterComponent';
-import MainMenu from '../../components/MainMenu'; // Import your MainMenu component
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import MainMenu from '../../components/MainMenu.jsx'; // Import your MainMenu component
 
 
 const Home = () => {
@@ -27,7 +24,7 @@ const Home = () => {
   
 
   return (
-    <div className="App">
+    <div className="welcome">
       {showMainMenu ? (
         <MainMenu onStartGame={handleStartGame} />
       ) : (

@@ -34,6 +34,13 @@ const Navbar = () => {
         </Link>
         <a
           href="#app-download"
+          onClick={() => setMenu("profile")}
+          className={menu === "profile" ? "active" : ""}
+        >
+          Profile
+        </a>
+        <a
+          href="#app-download"
           onClick={() => setMenu("mobile-app")}
           className={menu === "mobile-app" ? "active" : ""}
         >
