@@ -31,3 +31,20 @@
       opacity: 1;
     }
   }
+
+  /* In your main CSS file (e.g., App.css or a specific CSS file for CharacterComponent) */
+
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2; /* Make sure this is behind everything else */
+}
+
+.background {
+  z-index: -1; /* Keep this above the video but behind other elements */
+}
+

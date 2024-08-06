@@ -1,19 +1,3 @@
-// src/components/CharacterComponent.js
-// NOTHING NEEDS TO BE CHANGED HERE  - DANIEL
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 import React, { useEffect, useState } from 'react';
 import { useCharacterState } from './CharacterHooks';
 import { handleAnswer, handleStop, toggleMusic, handleRestart } from './CharacterLogic';
@@ -23,23 +7,22 @@ import { questions } from './questions';
 function CharacterComponent({ onReturnToMenu }) {
   // Destructure state and refs from the custom hook
   const {
-    direction, setDirection,               // Controls the direction the character is facing
-    bgAnimation, setBgAnimation,           // Manages background animation (e.g., moving forward/reverse)
-    charAnimation, setCharAnimation,       // Manages character animation (e.g., running, idle)
-    isPlaying, setIsPlaying,               // Tracks whether background music is playing
-    isFirstPlay, setIsFirstPlay,           // Tracks if it's the first play of the music
-    secondCharIn, setSecondCharIn,         // Manages the state of the second character entering
-    imageSrc, setImageSrc,                 // Sets the image source for the main character's sprite
-    isDead, setIsDead,                     // Tracks if the main character is dead
-    currentQuestion, setCurrentQuestion,   // Tracks the current question being asked
-    isCorrect, setIsCorrect,               // Tracks if the answer given was correct
-    characterRef, secondCharacterRef,      // References to the main and second characters in the DOM
+    direction, setDirection,
+    bgAnimation, setBgAnimation,
+    charAnimation, setCharAnimation,
+    isPlaying, setIsPlaying,
+    isFirstPlay, setIsFirstPlay,
+    secondCharIn, setSecondCharIn,
+    imageSrc, setImageSrc,
+    isDead, setIsDead,
+    currentQuestion, setCurrentQuestion,
+    isCorrect, setIsCorrect,
+    characterRef, secondCharacterRef,
   } = useCharacterState();
 
-  const [skeletonImage, setSkeletonImage] = useState('/Characters/attack-right.png'); // Skeleton sprite image
-  const [skeletonClass, setSkeletonClass] = useState('right');                        // CSS class to control skeleton's entry
+  const [skeletonImage, setSkeletonImage] = useState('/Characters/attack-right.png');
+  const [skeletonClass, setSkeletonClass] = useState('right');
 
-  // Function to detect collision between the main character and the skeleton
   const detectCollision = () => {
     const character = characterRef.current;
     const secondCharacter = secondCharacterRef.current;
@@ -48,7 +31,6 @@ function CharacterComponent({ onReturnToMenu }) {
       const characterRect = character.getBoundingClientRect();
       const secondCharacterRect = secondCharacter.getBoundingClientRect();
 
-      // Collision detection logic
       return (
         characterRect.left < secondCharacterRect.right &&
         characterRect.right > secondCharacterRect.left &&
@@ -60,24 +42,29 @@ function CharacterComponent({ onReturnToMenu }) {
     return false;
   };
 
-  // Effect to periodically check for collisions
   useEffect(() => {
-    if (isDead) return; // Skip collision checks if the character is already dead
+    if (isDead) return;
 
     const interval = setInterval(() => {
       if (detectCollision()) {
         setIsDead(true);
         setImageSrc('/Characters/dead.png');
         setCharAnimation('dead');
-        clearInterval(interval); // Stop checking for collisions if the character is dead
+        clearInterval(interval);
       }
     }, 1500);
 
-    return () => clearInterval(interval); // Cleanup the interval when component unmounts
+    return () => clearInterval(interval);
   }, [isDead, detectCollision, setImageSrc, setCharAnimation, setIsDead]);
 
   return (
     <div>
+      {/* Background video */}
+      <video autoPlay muted loop className="background-video">
+        <source src="videos/gameOverlay.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
       {/* Background animation */}
       <div className={`background ${bgAnimation}`}></div>
 
@@ -107,7 +94,6 @@ function CharacterComponent({ onReturnToMenu }) {
               </button>
             </div>
           )}
-          {/* Display when all questions have been answered */}
           {!isDead && currentQuestion >= questions.length && (
             <>
               <p>You've answered all the questions!</p>
@@ -121,15 +107,13 @@ function CharacterComponent({ onReturnToMenu }) {
         </div>
       </div>
 
-      {/* Death screen display */}
       {isDead && (
         <DeathScreen
           onRestart={() => handleRestart(setIsDead, setDirection, setImageSrc, setBgAnimation, setCharAnimation, setSecondCharIn, setIsFirstPlay, setIsPlaying, setCurrentQuestion, secondCharacterRef)}
-          onGoToMenu={onReturnToMenu} // Pass down the handler for going to the main menu
+          onGoToMenu={onReturnToMenu}
         />
       )}
 
-      {/* Background music */}
       <audio id="background-music" loop>
         <source src='/music/Jumanji.mp3' type='audio/mp3' />
         Your browser does not support the audio element.
