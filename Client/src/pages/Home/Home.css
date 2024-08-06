@@ -1,8 +1,12 @@
-
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .welcome{
+    display: flex;
   }
   
   .main-menu {
@@ -10,12 +14,11 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
     background-color: #282c34;
     color: white;
     text-align: center;
-    overflow: hidden; /* Prevents any overflow issues */
+    padding: 200px 0 400px 0;
   }
   
   .main-menu h1 {

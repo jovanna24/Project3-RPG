@@ -1,6 +1,6 @@
 /* background.css */
 .background {
-    position: fixed; 
+    position: absolute; 
     top: 0;
     left: 0;
     width: 120%;
@@ -15,6 +15,7 @@
     background-position: center;
     background-repeat: repeat-x;
     z-index: -1;
+    padding: 200px 0 300px
   }
   
   .background.forward {
