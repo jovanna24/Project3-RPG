@@ -5,8 +5,14 @@ import '../styles/mainMenu.css'; // Create this CSS file for styling
 function MainMenu({ onStartGame }) {
   return (
     <div className="main-menu">
-      <h1>Welcome to the Game!</h1>
-      <button onClick={onStartGame}>Start Game</button>
+      <video className="background-video" autoPlay muted loop>
+        <source src="videos/mainVideo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div className="menu-content">
+        <h1>INTERACTIVE RPG</h1>
+        <button onClick={onStartGame}>Survive</button>
+      </div>
     </div>
   );
 }
