@@ -74,3 +74,4 @@ const typeDefs = gql`
    getGameState(user_id: ID!): GameState
    getUser(_id: ID!): User
   }
+  `;
