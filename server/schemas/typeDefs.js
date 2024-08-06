@@ -54,18 +54,14 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     email: String!
-    profile: UserProfile
+    bio: String
+    avatar: String
     createdAt: String
   }
 
-  type UserProfile {
-    bio: String
-    avatar: String
-  }
-
-  input UserProfileInput {
-    bio: String
-    avatar: String
+  type Auth {
+    token: ID!
+    user: User
   }
 
   type Query {
@@ -74,4 +70,14 @@ const typeDefs = gql`
    getGameState(user_id: ID!): GameState
    getUser(_id: ID!): User
   }
+
+  type Mutation {
+    addUser(username: String!, email: String!, password: String!, bio: String, avatar: String): Auth
+    login(email: String!, password: String!): Auth
+    createChat(name: String!, participants: [ID]!): Chat
+    sendMessage(chatID: ID!, sender: ID!, text: String!): ChatMessage
+    updateGameState(user_id: ID!, level: Int!, score: Int!): GameState
+  }
   `;
+
+  module.exports = typeDefs;

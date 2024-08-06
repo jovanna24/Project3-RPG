@@ -19,7 +19,6 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  profile: {
     bio: {
       type: String,
       trim: true,
@@ -27,7 +26,6 @@ const UserSchema = new Schema({
     avatar: {
       type: String, // URL or path to the avatar image
     },
-  },
   createdAt: {
     type: Date,
     default: Date.now,

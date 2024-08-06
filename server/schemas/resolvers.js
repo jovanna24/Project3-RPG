@@ -29,32 +29,28 @@ const resolvers = {
   },
 
   Mutation: {
-    // Existing mutations
-    updateCharacter: async (_, { id, inventory, location }) => {
-      return await Character.findByIdAndUpdate(id, { inventory, location }, { new: true });
+    addUser: async (parent, { username, email, password, bio, avatar  }) => {
+      const user = await User.create({ username, email, password, bio, avatar });
+      const token = signToken(user);
+
+      return { token, user };
     },
-    createStory: async (_, { title, text }) => {
-      const story = new Story({ title, text });
-      return await story.save();
-    },
-    makeChoice: async (_, { storyId, choiceId }) => {
-      const story = await Story.findById(storyId).populate('choices');
-      const choice = story.choices.find(c => c.id === choiceId);
-      
-      if (choice.outcome) {
-        return {
-          story: choice.outcome.story,
-          success: true
-        };
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw AuthenticationError;
       }
-      
-      return {
-        story: null,
-        success: false
-      };
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw AuthenticationError;
+      }
+
+      const token = signToken(user);
+      return { token, user };
     },
-    
-    // New mutations
     createChat: async (_, { name, participants }) => {
       const chat = new Chat({ name, participants });
       return await chat.save();
@@ -70,8 +66,8 @@ const resolvers = {
         { new: true, upsert: true }
       );
     },
-    updateUser: async (_, { id, username, email, password, profile }) => {
-      return await User.findByIdAndUpdate(id, { username, email, password, profile }, { new: true });
+    updateUser: async (_, { id, username, email, password, user }) => {
+      return await User.findByIdAndUpdate(id, { username, email, password, user }, { new: true });
     },
   },
 };
