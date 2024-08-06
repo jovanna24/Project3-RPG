@@ -1,41 +1,48 @@
+/* src/styles/mainMenu.css */
 
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-  
-  .main-menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: #282c34;
-    color: white;
-    text-align: center;
-    overflow: hidden; /* Prevents any overflow issues */
-  }
-  
-  .main-menu h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-  }
-  
-  .main-menu button {
-    background-color: #61dafb;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    padding: 10px 20px;
-    margin: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-  }
-  
-  .main-menu button:hover {
-    background-color: #21a1f1;
-  }
-  
+.main-menu {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.background-video-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
+
+.menu-content {
+  position: relative;
+  z-index: 1;
+}
+
+.menu-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.menu-content button {
+  background-color: #61dafb;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.menu-content button:hover {
+  background-color: #21a1f1;
+}
