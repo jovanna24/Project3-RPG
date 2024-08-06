@@ -1,19 +1,35 @@
-// server/resolvers/index.js
-
-const Character = require('../models/Character');
-const Story = require('../models/Story');
+const Chat = require('../models/Chat');
+const ChatMessage = require('../models/ChatMessage');
+const GameState = require('../models/GameState');
+const User = require('../models/User');
 
 const resolvers = {
   Query: {
+    // Existing queries
     getCharacter: async (_, { id }) => {
       return await Character.findById(id);
     },
     getStory: async (_, { id }) => {
       return await Story.findById(id).populate('choices');
     },
+    
+    // New queries
+    getChat: async (_, { id }) => {
+      return await Chat.findById(id).populate('participants');
+    },
+    getChatMessages: async (_, { chatID }) => {
+      return await ChatMessage.find({ chatID }).populate('sender');
+    },
+    getGameState: async (_, { userId }) => {
+      return await GameState.findOne({ user: userId });
+    },
+    getUser: async (_, { id }) => {
+      return await User.findById(id);
+    },
   },
 
   Mutation: {
+    // Existing mutations
     updateCharacter: async (_, { id, inventory, location }) => {
       return await Character.findByIdAndUpdate(id, { inventory, location }, { new: true });
     },
@@ -25,7 +41,6 @@ const resolvers = {
       const story = await Story.findById(storyId).populate('choices');
       const choice = story.choices.find(c => c.id === choiceId);
       
-      // Define your logic for outcomes based on choices
       if (choice.outcome) {
         return {
           story: choice.outcome.story,
@@ -37,6 +52,26 @@ const resolvers = {
         story: null,
         success: false
       };
+    },
+    
+    // New mutations
+    createChat: async (_, { name, participants }) => {
+      const chat = new Chat({ name, participants });
+      return await chat.save();
+    },
+    sendMessage: async (_, { chatID, sender, text }) => {
+      const message = new ChatMessage({ chatID, sender, text });
+      return await message.save();
+    },
+    updateGameState: async (_, { userId, level, score }) => {
+      return await GameState.findOneAndUpdate(
+        { user: userId },
+        { level, score, lastSaved: Date.now() },
+        { new: true, upsert: true }
+      );
+    },
+    updateUser: async (_, { id, username, email, password, profile }) => {
+      return await User.findByIdAndUpdate(id, { username, email, password, profile }, { new: true });
     },
   },
 };
