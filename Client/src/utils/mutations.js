@@ -1,51 +1,63 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'; // Import gql from Apollo Client
 
-export const LOGIN = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+// Define your GraphQL mutations
+export const CREATE_USER_MUTATION = gql`
+  mutation CreateUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+      id
+      username
+      email
+    }
+  }
+`;
+
+export const LOGIN_USER_MUTATION = gql`
+  mutation LoginUser($input: LoginUserInput!) {
+    loginUser(input: $input) {
       token
       user {
-        _id
+        id
+        username
       }
     }
   }
 `;
 
-export const ADD_ORDER = gql`
-  mutation addOrder($products: [ID]!) {
-    addOrder(products: $products) {
-      purchaseDate
-      products {
-        _id
-        name
-        description
-        price
-        quantity
-        category {
-          name
-        }
-      }
+export const UPDATE_USER_MUTATION = gql`
+  mutation UpdateUser($id: ID!, $input: UpdateUserInput!) {
+    updateUser(id: $id, input: $input) {
+      id
+      username
+      email
     }
   }
 `;
 
-export const ADD_USER = gql`
-  mutation addUser(
-    $firstName: String!
-    $lastName: String!
-    $email: String!
-    $password: String!
-  ) {
-    addUser(
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      password: $password
-    ) {
-      token
-      user {
-        _id
-      }
+export const DELETE_USER_MUTATION = gql`
+  mutation DeleteUser($id: ID!) {
+    deleteUser(id: $id) {
+      id
+      username
     }
   }
 `;
+
+export const SAVE_GAME_STATE_MUTATION = gql`
+  mutation SaveGameState($input: SaveGameStateInput!) {
+    saveGameState(input: $input) {
+      id
+      level
+      score
+    }
+  }
+`;
+
+export const DELETE_GAME_STATE_MUTATION = gql`
+  mutation DeleteGameState($id: ID!) {
+    deleteGameState(id: $id) {
+      id
+      level
+    }
+  }
+`;
+
