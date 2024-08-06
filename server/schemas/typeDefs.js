@@ -70,22 +70,4 @@ const typeDefs = gql`
 
   type Query {
     getCharacter(id: ID!): Character
-    getStory(id: ID!): Story
-    getChat(id: ID!): Chat
-    getChatMessages(chatID: ID!): [ChatMessage]
-    getGameState(userId: ID!): GameState
-    getUser(id: ID!): User
-  }
-
-  type Mutation {
-    updateCharacter(id: ID!, inventory: [String], location: String): Character
-    createStory(title: String!, text: String!): Story
-    makeChoice(storyId: ID!, choiceId: ID!): StoryOutcome
-    createChat(name: String!, participants: [ID!]!): Chat
-    sendMessage(chatID: ID!, sender: ID!, text: String!): ChatMessage
-    updateGameState(userId: ID!, level: Int!, score: Int!): GameState
-    updateUser(id: ID!, username: String, email: String, password: String, profile: UserProfileInput): User
-  }
-`;
-
-module.exports = typeDefs;
+    getStory(id: I
