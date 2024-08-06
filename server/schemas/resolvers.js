@@ -5,13 +5,13 @@ const User = require('../models/User');
 
 const resolvers = {
   Query: {
-    // Existing queries
-    getCharacter: async (_, { id }) => {
-      return await Character.findById(id);
-    },
-    getStory: async (_, { id }) => {
-      return await Story.findById(id).populate('choices');
-    },
+    // // Existing queries
+    // getCharacter: async (_, { id }) => {
+    //   return await Character.findById(id);
+    // },
+    // getStory: async (_, { id }) => {
+    //   return await Story.findById(id).populate('choices');
+    // },
     
     // New queries
     getChat: async (_, { id }) => {

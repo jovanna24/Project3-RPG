@@ -2,7 +2,7 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type Character {
-    id: ID!
+    _id: ID!
     name: String!
     description: String
     inventory: [String]
@@ -10,14 +10,14 @@ const typeDefs = gql`
   }
 
   type Story {
-    id: ID!
+    _id: ID!
     title: String!
     text: String!
     choices: [Choice]
   }
 
   type Choice {
-    id: ID!
+    _id: ID!
     text: String!
     outcome: StoryOutcome
   }
@@ -28,14 +28,14 @@ const typeDefs = gql`
   }
 
   type Chat {
-    id: ID!
+    _id: ID!
     name: String!
     participants: [User]
     createdAt: String
   }
 
   type ChatMessage {
-    id: ID!
+    _id: ID!
     chatID: ID!
     sender: User
     text: String!
@@ -43,7 +43,7 @@ const typeDefs = gql`
   }
 
   type GameState {
-    id: ID!
+    _id: ID!
     user: User
     level: Int!
     score: Int!
@@ -51,7 +51,7 @@ const typeDefs = gql`
   }
 
   type User {
-    id: ID!
+    _id: ID!
     username: String!
     email: String!
     profile: UserProfile
@@ -69,5 +69,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    getCharacter(id: ID!): Character
-    getStory(id: I
+   getChat(_id: ID!): Chat
+   getChatMessages(chatID: ID!): [ChatMessage]
+   getGameState(user_id: ID!): GameState
+   getUser(_id: ID!): User
+  }
