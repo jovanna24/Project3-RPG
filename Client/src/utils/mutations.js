@@ -1,7 +1,16 @@
 import { gql } from '@apollo/client'; // Import gql from Apollo Client
 
-// Define your GraphQL mutations
-export const CREATE_USER_MUTATION = gql`
+export const ADD_USER = gql`
+  mutation AddUser($input: AddUserInput!) {
+    addUser(input: $input) {
+      id
+      username
+      email
+    }
+  }
+`;
+
+export const CREATE_USER = gql`
   mutation CreateUser($input: CreateUserInput!) {
     createUser(input: $input) {
       id
@@ -11,7 +20,7 @@ export const CREATE_USER_MUTATION = gql`
   }
 `;
 
-export const LOGIN_USER_MUTATION = gql`
+export const LOGIN_USER = gql`
   mutation LoginUser($input: LoginUserInput!) {
     loginUser(input: $input) {
       token
@@ -23,7 +32,7 @@ export const LOGIN_USER_MUTATION = gql`
   }
 `;
 
-export const UPDATE_USER_MUTATION = gql`
+export const UPDATE_USER = gql`
   mutation UpdateUser($id: ID!, $input: UpdateUserInput!) {
     updateUser(id: $id, input: $input) {
       id
@@ -33,7 +42,7 @@ export const UPDATE_USER_MUTATION = gql`
   }
 `;
 
-export const DELETE_USER_MUTATION = gql`
+export const DELETE_USER = gql`
   mutation DeleteUser($id: ID!) {
     deleteUser(id: $id) {
       id
@@ -42,7 +51,7 @@ export const DELETE_USER_MUTATION = gql`
   }
 `;
 
-export const SAVE_GAME_STATE_MUTATION = gql`
+export const SAVE_GAME_STATE = gql`
   mutation SaveGameState($input: SaveGameStateInput!) {
     saveGameState(input: $input) {
       id
@@ -52,7 +61,7 @@ export const SAVE_GAME_STATE_MUTATION = gql`
   }
 `;
 
-export const DELETE_GAME_STATE_MUTATION = gql`
+export const DELETE_GAME_STATE = gql`
   mutation DeleteGameState($id: ID!) {
     deleteGameState(id: $id) {
       id
