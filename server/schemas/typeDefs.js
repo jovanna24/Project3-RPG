@@ -77,6 +77,7 @@ const typeDefs = gql`
     createChat(name: String!, participants: [ID]!): Chat
     sendMessage(chatID: ID!, sender: ID!, text: String!): ChatMessage
     updateGameState(user_id: ID!, level: Int!, score: Int!): GameState
+    updateUser(_id: ID!, username: String, email: String, bio: String, avatar: String): User
   }
   `;
 
