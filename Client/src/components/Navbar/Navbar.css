@@ -25,6 +25,7 @@
     display: flex;
     align-items: center;
     gap: 40px;
+    padding: 20px;
 }
 
 .navbar-auth-buttons {
@@ -36,8 +37,10 @@
 .navbar-auth-buttons button {
     background: transparent;
     font-size: 16px;
+
     color: green;
     border: 1px solid green;
+
     padding: 10px 30px;
     border-radius: 50px;
     cursor: pointer;
