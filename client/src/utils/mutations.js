@@ -60,4 +60,18 @@ export const SEND_MESSAGE = gql`
     }
 `;
 
+export const GET_CHAT_MESSAGES = gql`
+  query GetChatMessages($chatID: ID!) {
+    chatMessages(chatID: $chatID) {
+      id
+      text
+      sender {
+        id
+        username
+      }
+      timestamp
+    }
+  }
+`;
+
 
