@@ -82,7 +82,7 @@ const Navbar = () => {
                     <div className="navbar-profile">
                         <img src={User} alt="user" />
                         <ul className="nav-profile-dropdown">
-                            <hr />
+                            {/* <hr /> */}
                             <li onClick={logout}>
                                 <p>Logout</p>
                             </li>
