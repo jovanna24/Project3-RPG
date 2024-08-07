@@ -8,6 +8,8 @@
     background-color: white;
     color: gray;
     position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .navbar-logo {
