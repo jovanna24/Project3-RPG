@@ -1,0 +1,75 @@
+/* chatBox.css */
+.chat-box {
+    position: relative;
+    bottom: 0;
+    right: 0px;
+    width: 300px;
+    max-height: 400px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    z-index: 9999;
+    margin-top: 25px;
+}
+
+.chat-box.closed {
+    transform: translateY(100%);
+    overflow: hidden;
+}
+
+.chat-box.open {
+    transform: translateY(0);
+    overflow: hidden;
+}
+
+.chat-toggle {
+    width: 100%;
+    background-color: #61dafb;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+.chat-content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: ;
+}
+
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 250px;
+    color: darkblue;
+}
+
+.message {
+    background-color: #f1f1f1;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    
+    text-align: center;
+}
+
+button {
+    padding: 10px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

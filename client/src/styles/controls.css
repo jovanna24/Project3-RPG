@@ -9,7 +9,7 @@
     padding: 10px 30px;
     font-size: 24px;
     cursor: pointer;
-    background-color: #3498db;
+    background-color: #075930;
     color: white;
     border: solid;
     border-radius: 5px;
@@ -17,7 +17,7 @@
   }
   
   .controls button:hover {
-    background-color: #2980b9;
+    background-color: #046e24;
   }
   
  p {
