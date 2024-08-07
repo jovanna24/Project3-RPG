@@ -8,11 +8,11 @@ import LoginForm from '../LoginForm/LoginForm.jsx';
 import auth from "../../utils/auth";
 
 const Navbar = () => {
-    const [menu, setMenu] = useState("home");
-    const [token, setToken] = useState(auth.getToken());
+    const [menu, setMenu] = useState("home"); // State to track which menu is active
+    const [token, setToken] = useState(auth.getToken()); // Get token from local storage
     const [showLogin, setShowLogin] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Use navigate hook from react-router-dom
 
     useEffect(() => {
         const savedToken = localStorage.getItem("token");
