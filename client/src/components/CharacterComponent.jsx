@@ -86,17 +86,19 @@ function CharacterComponent({ onReturnToMenu }) {
           {!isDead && currentQuestion < questions.length && (
             <div className="question-container">
               <p>{questions[currentQuestion].question}</p>
+              <p className='buttons-game'>
               <button onClick={() => handleAnswer('A', currentQuestion, setCurrentQuestion, setSecondCharIn, setIsCorrect, setImageSrc, setDirection, setBgAnimation, setCharAnimation, setIsDead, handleRestart, detectCollision, handleStop, setSkeletonImage, setSkeletonClass)}>
                 {questions[currentQuestion].optionA}
               </button>
               <button onClick={() => handleAnswer('B', currentQuestion, setCurrentQuestion, setSecondCharIn, setIsCorrect, setImageSrc, setDirection, setBgAnimation, setCharAnimation, setIsDead, handleRestart, detectCollision, handleStop, setSkeletonImage, setSkeletonClass)}>
                 {questions[currentQuestion].optionB}
               </button>
+              </p>
             </div>
           )}
           {!isDead && currentQuestion >= questions.length && (
             <>
-              <p>You've answered all the questions!</p>
+              <p>You leap into the water, quenched but caught in a strong current. Struggling to find a grip, you cling to a buoyant object and float in darkness. Hours later, sunlight appears, and you end up on the other side of the mountain. Campers spot you, rescue you, and take you to the nearest hospital. CONGRATS! YOU SURVIVED WITH MINOR INJURIES!</p>
               {isFirstPlay ? (
                 <button onClick={() => toggleMusic(isPlaying, setIsPlaying, setIsFirstPlay)}>Start Music</button>
               ) : (
