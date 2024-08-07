@@ -36,9 +36,13 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (_, { username, email, password, bio, avatar }) => {
+    addUser: async(_, { userInput }) => {
+      console.log(userInput);
       try {
-        const user = await User.create({ username, email, password, bio, avatar });
+        const user = await User.create(userInput);
+        if (!user) {
+          throw new Error('User not created');
+        }
         const token = signToken(user);
         return { token, user };
       } catch (err) {
