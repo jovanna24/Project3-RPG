@@ -5,10 +5,11 @@ import User from "../../assets/User.svg";
 import { useState, useEffect } from "react";
 import SignUpForm from '../SignupForm/SignupForm.jsx';
 import LoginForm from '../LoginForm/LoginForm.jsx';
+import auth from "../../utils/auth";
 
 const Navbar = () => {
     const [menu, setMenu] = useState("home");
-    const [token, setToken] = useState(null);
+    const [token, setToken] = useState(auth.getToken());
     const [showLogin, setShowLogin] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
     const navigate = useNavigate();

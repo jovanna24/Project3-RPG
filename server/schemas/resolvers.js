@@ -1,6 +1,7 @@
 const Chat = require('../models/Chat');
 const ChatMessage = require('../models/ChatMessage');
 const User = require('../models/User');
+const { signToken } = require('../utils/auth');
 
 // const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc'); // Adding stripe for payements from users -Mustafa
 

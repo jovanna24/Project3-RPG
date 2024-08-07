@@ -35,7 +35,7 @@ const SignupForm = () => {
         },
       });
 
-      const { token } = data.createUser;
+      const { token } = data.addUser;
       Auth.login(token);
       setUserFormData({ username: '', email: '', password: '', bio: '', avatar: ''  }); // Clear form only on success
     } catch (err) {

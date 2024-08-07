@@ -66,8 +66,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser( UserInput: UserInput!): Auth
-    login(email: String!, password: String!): Auth
+    addUser( userInput: UserInput!): Auth
+    login(usernameOrEmail: String!, password: String!): Auth
     createChat(name: String!, participants: [ID]!): Chat
     sendMessage(chatID: ID!, sender: ID!, text: String!): ChatMessage
     updateUser(_id: ID!, username: String, email: String, bio: String, avatar: String): User
