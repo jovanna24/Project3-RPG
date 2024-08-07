@@ -1,13 +1,13 @@
-<<<<<<< HEAD
+
 import './Profile.css'
-=======
+
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GET_USER_PROFILE_QUERY } from '../../utils/queries';
 
-import {CharacterComponent } from 'Client/src/components/CharacterComponent.jsx'// importing Character avatar from CharacterComponent.jsx
->>>>>>> ce38c143073cd5498ed5a09c687a8e2fea60cb03
+// import {CharacterComponent } from 'Client/src/components/CharacterComponent.jsx'// importing Character avatar from CharacterComponent.jsx
+// the component needs to be put somewhere in the return section
 
 const Profile = () => {
   const { profileId } = useParams();
