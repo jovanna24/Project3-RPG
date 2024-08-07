@@ -42,13 +42,6 @@ const typeDefs = gql`
     timestamp: String
   }
 
-  type GameState {
-    _id: ID!
-    user: User
-    level: Int!
-    score: Int!
-    lastSaved: String
-  }
 
   type User {
     _id: ID!
@@ -69,7 +62,6 @@ const typeDefs = gql`
    getSingleUser(userId: ID, username: String): User
    getChat(_id: ID!): Chat
    getChatMessages(chatID: ID!): [ChatMessage]
-   getGameState(user_id: ID!): GameState
    getUser(_id: ID!): User
   }
 
@@ -78,7 +70,6 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     createChat(name: String!, participants: [ID]!): Chat
     sendMessage(chatID: ID!, sender: ID!, text: String!): ChatMessage
-    updateGameState(user_id: ID!, level: Int!, score: Int!): GameState
     updateUser(_id: ID!, username: String, email: String, bio: String, avatar: String): User
   }
     

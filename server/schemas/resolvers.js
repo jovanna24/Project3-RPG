@@ -1,6 +1,5 @@
 const Chat = require('../models/Chat');
 const ChatMessage = require('../models/ChatMessage');
-const GameState = require('../models/GameState');
 const User = require('../models/User');
 
 const resolvers = {
@@ -32,9 +31,6 @@ const resolvers = {
       } catch (err) {
         throw new Error(err.message);
       }
-    },
-    getGameState: async (_, { userId }) => {
-      return await GameState.findOne({ user: userId });
     },
 
   },
@@ -88,13 +84,6 @@ const resolvers = {
       } catch (err) {
         throw new Error(err.message);
       }
-    },
-    updateGameState: async (_, { userId, level, score }) => {
-      return await GameState.findOneAndUpdate(
-        { user: userId },
-        { level, score, lastSaved: Date.now() },
-        { new: true, upsert: true }
-      );
     },
     updateUser: async (_, { id, username, email, password, user }) => {
       return await User.findByIdAndUpdate(id, { username, email, password, user }, { new: true });
