@@ -1,21 +1,3 @@
-
-// 
-//
-// 
-// 
-// CHECK FOR BREAKS IN THE COMMENTS - DANIEL
-//
-// 
-//
-// 
-//
-
-
-
-
-
-
-
 import { questions } from './questions';
 
 export const handleAnswer = (
@@ -33,17 +15,14 @@ export const handleAnswer = (
   detectCollision,
   handleStop,
   setSkeletonImage,
-  setSkeletonClass // Ensure this is passed and used correctly
+  setSkeletonClass
 ) => {
   // Retrieve the correct answer for the current question
   const correctAnswer = questions[currentQuestion].correctAnswer;
 
   // Determine the skeleton's entry direction based on the question index
-  //
-  //
-  //
-  // Here is where u set the opposite direction from which the skeleton will come from and the # of answers is changed in (currentQuestion % 2 === 0 ? 'left' : 'left';)
-  const skeletonDirection = currentQuestion % 2 === 0 ? 'left' : 'left'; // Currently set to always 'left'
+  // Alternates direction based on the question index
+  const skeletonDirection = currentQuestion % 2 === 0 ? 'left' : 'right'; 
 
   // Set the direction and run animation based on the answer
   if (answer === 'A') {

@@ -96,7 +96,8 @@ function CharacterComponent({ onReturnToMenu }) {
           )}
           {!isDead && currentQuestion >= questions.length && (
             <>
-              <p>You've answered all the questions!</p>
+              <p>You leap into the water, blindly hoping the rushing current won’t wash you away. As soon as you hit the water you take a big gulp, quenching your thirst. Relief rushes over you as you are now at least temporarily satiated. However, you realize the water is running much faster than you anticipated. You cannot fight the current. You swim towards the cave wall, trying to find anything to grab onto. The wall is slick with no hand holds. At least you have air, right? You cannot see where you are going or how to get out, you just focus on staying afloat. You feel a large buoyant object brush past you, and you grab on with all remaining strength you have. You hang onto the large object, regaining your stamina. You continue to float in the dark, and after what seems like hours, you begin to see sunlight. As the beams hit your face, you are overwhelmed with relief. It seems as if the river through the cave was never ending. You end up on the other side of the mountain you landed on hours before, freezing cold after being in the water for so long. Luckily you start to hear shouting, as the river widens and calms. Some nearby campers have spotted you! They rush to your aid, and get you out of the water, giving you food and shelter. The campers usher you into their car, driving you to the nearest hospital. CONGRATS! YOU SURVIVED WITH MINOR INJURIES!
+              </p>
               {isFirstPlay ? (
                 <button onClick={() => toggleMusic(isPlaying, setIsPlaying, setIsFirstPlay)}>Start Music</button>
               ) : (
