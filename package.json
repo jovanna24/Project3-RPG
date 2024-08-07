@@ -16,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/client": "^3.11.1",
+    "@apollo/client": "^3.7.5",
     "@apollo/server": "^4.7.1",
     "apollo-server": "^3.13.0",
     "apollo-server-express": "^3.6.2",
@@ -31,6 +31,6 @@
     "react-bootstrap": "^2.10.4"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.2"
   }
 }
