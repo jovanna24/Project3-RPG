@@ -1,15 +1,37 @@
-// ChatBox.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useMutation } from '@apollo/client';
 import './Chatbox.css';
+import { SEND_MESSAGE } from '../../utils/mutations';
+import { GET_CHAT_MESSAGES } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
+ 
 
-const ChatBox = () => {
+const ChatBox = ({ chatID }) => {
+    const { data, loading, error } = useQuery(GET_CHAT_MESSAGES, {
+        variables: { chatID },
+    });
+
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+    const [sendMessage] = useMutation(SEND_MESSAGE);
 
-    const handleSendMessage = () => {
+    useEffect(() => {
+        if (data && data.chatMessages) {
+            setMessages(data.chatMessages);
+        }
+        }, [data]);
+
+    const handleSendMessage = async () => {
         if (input.trim()) {
-            setMessages([...messages, input]);
-            setInput('');
+            try {
+                const {data} = await sendMessage({
+                    variables: { chatID, sender: 'user-id', text: input },
+                });
+                setMessages([...messages, data.sendMessage]);
+                setInput('');
+            } catch (error) {
+                console.error("Error sending message:", error);
+            }
         }
     };
 

@@ -27,7 +27,11 @@ const resolvers = {
       return await Chat.findById(id).populate('participants');
     },
     getChatMessages: async (_, { chatID }) => {
-      return await ChatMessage.find({ chatID }).populate('sender');
+      try {
+        return await ChatMessage.find({ chatID }).populate('sender');
+      } catch (err) {
+        throw new Error(err.message);
+      }
     },
     getGameState: async (_, { userId }) => {
       return await GameState.findOne({ user: userId });
@@ -78,8 +82,12 @@ const resolvers = {
       return await chat.save();
     },
     sendMessage: async (_, { chatID, sender, text }) => {
-      const message = new ChatMessage({ chatID, sender, text });
-      return await message.save();
+      try {
+        const message = new ChatMessage({ chatID, sender, text });
+        return await message.save();
+      } catch (err) {
+        throw new Error(err.message);
+      }
     },
     updateGameState: async (_, { userId, level, score }) => {
       return await GameState.findOneAndUpdate(

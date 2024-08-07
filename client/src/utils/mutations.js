@@ -46,5 +46,18 @@ export const DELETE_USER = gql`
   }
 `;
 
+export const SEND_MESSAGE = gql`
+    mutation SendMessage($chatID: ID!, $sender: ID!, $text: String!) {
+        sendMessage(chatID: $chatID, sender: $sender, text: $text) {
+            id
+            text
+            sender {
+                id
+                username
+            }
+            timestamp
+        }
+    }
+`;
 
 
