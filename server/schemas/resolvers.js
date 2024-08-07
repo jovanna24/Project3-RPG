@@ -3,7 +3,7 @@ const ChatMessage = require('../models/ChatMessage');
 const GameState = require('../models/GameState');
 const User = require('../models/User');
 
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc'); // Adding stripe for payements from users -Mustafa
+// const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc'); // Adding stripe for payements from users -Mustafa
 
 const resolvers = {
   Query: {
