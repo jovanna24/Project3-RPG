@@ -4,10 +4,10 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER, SIGNUP_USER } from '../../services/authService';
 
 const AuthPopup = ({ closePopup }) => {
-  const [isLogin, setIsLogin] = useState(true); // State to toggle between login and signup
+  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState(''); // Additional state for signup
+  const [name, setName] = useState('');
   const [login, { loading: loginLoading, error: loginError }] = useMutation(LOGIN_USER);
   const [signup, { loading: signupLoading, error: signupError }] = useMutation(SIGNUP_USER);
 
@@ -23,7 +23,7 @@ const AuthPopup = ({ closePopup }) => {
       }
     } else {
       try {
-        const { data } = await signup({ variables: { email, password, name } });
+        const { data } = await signup({ variables: { name, email, password } });
         console.log('Signup successful:', data);
         closePopup();
       } catch (err) {
