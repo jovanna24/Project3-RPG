@@ -20,25 +20,6 @@ export const GET_ALL_USERS = gql`
   }
 `;
 
-export const GET_GAME_STATE = gql`
-  query GetGameState($id: ID!) {
-    gameState(id: $id) {
-      id
-      level
-      score
-    }
-  }
-`;
-
-export const GET_ALL_GAME_STATES = gql`
-  query GetAllGameStates {
-    gameStates {
-      id
-      level
-      score
-    }
-  }
-`;
 
 export const GET_CHAT_MESSAGES = gql`
   query GetChatMessages($chatID: ID!) {
