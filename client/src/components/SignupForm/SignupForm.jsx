@@ -29,11 +29,9 @@ const SignupForm = () => {
     try {
       const { data } = await addUserMutation({
         variables: { 
-          userInput: userFormData.username,
-          email: userFormData.email,
-          password: userFormData.password,
-          bio: userFormData.bio,
-          avatar: userFormData.avatar
+          userInput: {
+            ...userFormData
+          }
         },
       });
 
