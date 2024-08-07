@@ -65,6 +65,8 @@ const typeDefs = gql`
   }
 
   type Query {
+   me: User
+   getSingleUser(userId: ID, username: String): User
    getChat(_id: ID!): Chat
    getChatMessages(chatID: ID!): [ChatMessage]
    getGameState(user_id: ID!): GameState

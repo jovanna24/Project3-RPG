@@ -28,12 +28,18 @@ const SignupForm = () => {
 
     try {
       const { data } = await addUserMutation({
-        variables: { userInput: { ...userFormData } },
+        variables: { 
+          userInput: userFormData.username,
+          email: userFormData.email,
+          password: userFormData.password,
+          bio: userFormData.bio,
+          avatar: userFormData.avatar
+        },
       });
 
       const { token } = data.createUser;
       Auth.login(token);
-      setUserFormData({ username: '', email: '', password: '' }); // Clear form only on success
+      setUserFormData({ username: '', email: '', password: '', bio: '', avatar: ''  }); // Clear form only on success
     } catch (err) {
       console.error(err);
       setShowAlert(true);

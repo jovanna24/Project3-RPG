@@ -5,15 +5,24 @@ const User = require('../models/User');
 
 const resolvers = {
   Query: {
-    // // Existing queries
-    // getCharacter: async (_, { id }) => {
-    //   return await Character.findById(id);
-    // },
-    // getStory: async (_, { id }) => {
-    //   return await Story.findById(id).populate('choices');
-    // },
-    
-    // New queries
+    me: async (__, _, { user }) => {
+      const foundUser = await User.findOne({ _id: user._id });
+      return foundUser;
+    }, 
+
+    getSingleUser: async (_, { userId, username}, { user }) => {
+      try {
+        const foundUser = await User.findOne({
+          $or: [{ _id: userId ? userId: user._id }, { username: username }],
+        });
+        if (!foundUser) {
+          throw new Error('User not found');
+        }
+        return foundUser;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
     getChat: async (_, { id }) => {
       return await Chat.findById(id).populate('participants');
     },
@@ -23,34 +32,43 @@ const resolvers = {
     getGameState: async (_, { userId }) => {
       return await GameState.findOne({ user: userId });
     },
-    getUser: async (_, { id }) => {
-      return await User.findById(id);
-    },
+
   },
 
   Mutation: {
-    addUser: async (parent, { username, email, password, bio, avatar  }) => {
-      const user = await User.create({ username, email, password, bio, avatar });
-      const token = signToken(user);
-
-      return { token, user };
-    },
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
-
-      if (!user) {
-        throw AuthenticationError;
+    addUser: async (_, { username, email, password, bio, avatar }) => {
+      try {
+        const user = await User.create({ username, email, password, bio, avatar });
+        const token = signToken(user);
+        return { token, user };
+      } catch (err) {
+        throw new Error(err.message);
       }
-
-      const correctPw = await user.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw AuthenticationError;
-      }
-
-      const token = signToken(user);
-      return { token, user };
     },
+
+    updateUser: async (_, { _id, username, email, bio, avatar }) => {
+      return await User.findByIdAndUpdate(_id, { username, email, bio, avatar }, { new: true });
+    },
+
+    login: async (_, { usernameOrEmail, password }) => {
+      try {
+        const user = await User.findOne({
+          $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
+        });
+        if (!user) {
+          throw new Error('User not found');
+        }
+        const correctPw = await user.isCorrectPassword(password);
+        if (!correctPw) {
+          throw new Error('Incorrect password');
+        }
+        const token = signToken(user);
+        return { token, user };
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    },
+
     createChat: async (_, { name, participants }) => {
       const chat = new Chat({ name, participants });
       return await chat.save();
