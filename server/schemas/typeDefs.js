@@ -81,6 +81,12 @@ const typeDefs = gql`
     updateGameState(user_id: ID!, level: Int!, score: Int!): GameState
     updateUser(_id: ID!, username: String, email: String, bio: String, avatar: String): User
   }
+    
+  input UserInput {
+    username: String
+    email: String!
+    password: String!
+  }
   `;
 
   module.exports = typeDefs;
