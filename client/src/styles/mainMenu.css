@@ -25,6 +25,7 @@
 .menu-content {
   position: relative;
   z-index: 1;
+  overflow: hidden;
 }
 
 .menu-content h1 {
@@ -33,7 +34,7 @@
 }
 
 .menu-content button {
-  background-color: #61dafb;
+  background-color:#075930;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -44,5 +45,13 @@
 }
 
 .menu-content button:hover {
-  background-color: #21a1f1;
+  background-color: #046e24;
+}
+
+
+.chat-box {
+  /* Add any additional styles for chatbox placement here */
+  position: absolute;
+  bottom: 50px; /* Adjust as necessary */
+  right: 20px; /* Adjust as necessary */
 }

@@ -1,8 +1,15 @@
 // src/components/MainMenu.jsx
-import React from 'react';
-import '../styles/mainMenu.css'; // Create this CSS file for styling
+import React, { useState } from 'react';
+import '../styles/mainMenu.css';
+import ChatBox from '../components/Chatbox/Chatbox'; // Import the ChatBox component
 
 function MainMenu({ onStartGame }) {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
+
   return (
     <div className="main-menu">
       <video className="background-video-main" autoPlay muted loop>
@@ -12,7 +19,11 @@ function MainMenu({ onStartGame }) {
       <div className="menu-content">
         <h1>INTERACTIVE RPG</h1>
         <button onClick={onStartGame}>Survive</button>
+        <button onClick={toggleChat}>
+          {isChatOpen ? 'Close Chat' : 'Open Chat'}
+        </button>
       </div>
+      {isChatOpen && <ChatBox />} {/* Conditionally render ChatBox */}
     </div>
   );
 }
