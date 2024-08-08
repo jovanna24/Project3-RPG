@@ -9,24 +9,6 @@ const typeDefs = gql`
     location: String
   }
 
-  type Story {
-    _id: ID!
-    title: String!
-    text: String!
-    choices: [Choice]
-  }
-
-  type Choice {
-    _id: ID!
-    text: String!
-    outcome: StoryOutcome
-  }
-
-  type StoryOutcome {
-    story: Story
-    success: Boolean
-  }
-
   type Chat {
     _id: ID!
     name: String!

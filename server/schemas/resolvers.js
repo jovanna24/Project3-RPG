@@ -113,8 +113,12 @@ const resolvers = {
     },
 
     createChat: async (_, { name, participants }) => {
-      const chat = new Chat({ name, participants });
-      return await chat.save();
+      try {
+        const chat = new Chat({ name, participants });
+        return await chat.save();
+      } catch (error) {
+        throw new Error(error.message);
+      }
     },
     sendMessage: async (_, { chatId, sender, text }) => {
       try {

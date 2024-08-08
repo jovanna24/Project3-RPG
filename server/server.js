@@ -19,6 +19,26 @@ const server = new ApolloServer({
 
 app.use(cors());
 
+app.get('/api/token', (req, res) => {
+  const id_token = req.headers.authorization?.split(' ').pop().trim();
+  if (!id_token) return res.status(400).json({ error: 'No token provided' });
+
+  try {
+    // Verify the ID token
+    const user = authMiddleware({ req: { headers: { authorization: `Bearer ${id_token}` } } }).user;
+    if (user) {
+      // Generate a new token for Weavy
+      const newToken = authMiddleware.signToken(user);
+      res.json({ token: newToken });
+    } else {
+      res.status(401).json({ error: 'Invalid token' });
+    }
+  } catch (err) {
+    console.error('Failed to generate token:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 const startApolloServer = async () => {
   await server.start();
   
