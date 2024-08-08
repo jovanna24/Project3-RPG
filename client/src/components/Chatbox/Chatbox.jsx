@@ -4,11 +4,11 @@ import './Chatbox.css';
 import { SEND_MESSAGE } from '../../utils/mutations';
 import { GET_CHAT_MESSAGES } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
- 
 
-const ChatBox = ({ chatID }) => {
+
+const ChatBox = ({ chatId, currentUserID }) => {
     const { data, loading, error } = useQuery(GET_CHAT_MESSAGES, {
-        variables: { chatID },
+        variables: { chatId, sender: currentUserID },
     });
 
     const [messages, setMessages] = useState([]);
@@ -16,8 +16,8 @@ const ChatBox = ({ chatID }) => {
     const [sendMessage] = useMutation(SEND_MESSAGE);
 
     useEffect(() => {
-        if (data && data.chatMessages) {
-            setMessages(data.chatMessages);
+        if (data && data.getChatMessages) {
+            setMessages(data.getChatMessages);
         }
         }, [data]);
 
@@ -25,7 +25,7 @@ const ChatBox = ({ chatID }) => {
         if (input.trim()) {
             try {
                 const {data} = await sendMessage({
-                    variables: { chatID, sender: 'user-id', text: input },
+                    variables: { chatId, sender: currentUserID, text: input },
                 });
                 setMessages([...messages, data.sendMessage]);
                 setInput('');

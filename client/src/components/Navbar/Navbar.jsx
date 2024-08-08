@@ -21,12 +21,6 @@ const Navbar = () => {
         }
     }, []);
 
-    const logout = () => {
-        localStorage.removeItem("token");
-        setToken(null);
-        navigate("/");
-    };
-
     const handleLoginClose = () => {
         setShowLogin(false);
         setShowSignUp(false);

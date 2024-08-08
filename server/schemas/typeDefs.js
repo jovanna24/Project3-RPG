@@ -36,7 +36,7 @@ const typeDefs = gql`
 
   type ChatMessage {
     _id: ID!
-    chatID: ID!
+    chatId: ID!
     sender: User
     text: String!
     timestamp: String
@@ -61,7 +61,7 @@ const typeDefs = gql`
    me: User
    getSingleUser(userId: ID, username: String): User
    getChat(_id: ID!): Chat
-   getChatMessages(chatID: ID!): [ChatMessage]
+   getChatMessages(chatId: ID!): [ChatMessage]
    getUser(_id: ID!): User
   }
 
@@ -69,7 +69,7 @@ const typeDefs = gql`
     addUser( userInput: UserInput!): Auth
     login(usernameOrEmail: String!, password: String!): Auth
     createChat(name: String!, participants: [ID]!): Chat
-    sendMessage(chatID: ID!, sender: ID!, text: String!): ChatMessage
+    sendMessage(chatId: ID!, sender: ID!, text: String!): ChatMessage
     updateUser(_id: ID!, username: String, email: String, bio: String, avatar: String): User
   }
     

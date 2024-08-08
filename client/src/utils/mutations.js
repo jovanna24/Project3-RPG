@@ -40,38 +40,27 @@ export const UPDATE_USER = gql`
 export const DELETE_USER = gql`
   mutation DeleteUser($id: ID!) {
     deleteUser(id: $id) {
-      id
+      _id
       username
     }
   }
 `;
 
 export const SEND_MESSAGE = gql`
-    mutation SendMessage($chatID: ID!, $sender: ID!, $text: String!) {
-        sendMessage(chatID: $chatID, sender: $sender, text: $text) {
-            id
-            text
-            sender {
-                id
-                username
-            }
-            timestamp
-        }
+mutation SendMessage($chatId: ID!, $sender: ID!, $text: String!) {
+  sendMessage(chatId: $chatId, sender: $sender, text: $text) {
+    _id
+    text
+    sender {
+      _id
+      username
     }
+    timestamp
+    chatId
+  }
+}
 `;
 
-export const GET_CHAT_MESSAGES = gql`
-  query GetChatMessages($chatID: ID!) {
-    chatMessages(chatID: $chatID) {
-      id
-      text
-      sender {
-        id
-        username
-      }
-      timestamp
-    }
-  }
-`;
+
 
 

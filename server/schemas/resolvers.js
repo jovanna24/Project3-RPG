@@ -25,12 +25,12 @@ const resolvers = {
         throw new Error(err);
       }
     },
-    getChat: async (_, { id }) => {
-      return await Chat.findById(id).populate('participants');
+    getChat: async (_, { _id }) => {
+      return await Chat.findById(_id).populate('participants');
     },
-    getChatMessages: async (_, { chatID }) => {
+    getChatMessages: async (_, { chatId }) => {
       try {
-        return await ChatMessage.find({ chatID }).populate('sender');
+        return await ChatMessage.find({ chatId }).populate('sender');
       } catch (err) {
         throw new Error(err.message);
       }
@@ -93,10 +93,6 @@ const resolvers = {
       }
     },
 
-    updateUser: async (_, { _id, username, email, bio, avatar }) => {
-      return await User.findByIdAndUpdate(_id, { username, email, bio, avatar }, { new: true });
-    },
-
     login: async (_, { usernameOrEmail, password }) => {
       try {
         const user = await User.findOne({
@@ -120,9 +116,9 @@ const resolvers = {
       const chat = new Chat({ name, participants });
       return await chat.save();
     },
-    sendMessage: async (_, { chatID, sender, text }) => {
+    sendMessage: async (_, { chatId, sender, text }) => {
       try {
-        const message = new ChatMessage({ chatID, sender, text });
+        const message = new ChatMessage({ chatId, sender, text });
         return await message.save();
       } catch (err) {
         throw new Error(err.message);
