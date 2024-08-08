@@ -43,7 +43,7 @@ export const handleAnswer = (
   //
   //
   // Here is where u set the opposite direction from which the skeleton will come from and the # of answers is changed in (currentQuestion % 2 === 0 ? 'left' : 'left';)
-  const skeletonDirection = currentQuestion % 2 === 0 ? 'left' : 'left'; // Currently set to always 'left'
+  const skeletonDirection = currentQuestion % 2 === 0 ? 'left' : 'right';
 
   // Set the direction and run animation based on the answer
   if (answer === 'A') {
