@@ -5,8 +5,7 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Outfit', sans-serif;
-    /* had to comment out overflow to allow dropdowns to show */
-    /* overflow-x: hidden;  */
+    overflow-x: hidden; 
     
   } 
 
