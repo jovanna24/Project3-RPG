@@ -1,7 +1,9 @@
 import { ChannelList, Channel, ChannelSettings } from "@sendbird/uikit-react";
 import { useState, useRef, useEffect } from "react";
-import SendBird from 'sendbird';
-import './Chatbox.css';
+import SendBird from "sendbird";
+import "./Chatbox.css";
+import { App as SendbirdApp } from "@sendbird/uikit-react";
+import "@sendbird/uikit-react/dist/index.css";
 
 const Chatbox = () => {
   const [currentChannel, setCurrentChannel] = useState(null);
@@ -81,7 +83,7 @@ const Chatbox = () => {
   const hideSettingsBar = () => {
     if (channelChatRef.current) {
       channelChatRef.current.style.width = "76%";
-      channelChatRef.current.style.float = "right"; 
+      channelChatRef.current.style.float = "right";
     }
   };
 
@@ -122,8 +124,9 @@ const Chatbox = () => {
   };
 
   return (
-    <div className="channel-wrap">
-      <div className="channel-list">
+    <>
+  <div className="chat-container">
+  <div className="channel-list" style={{ width: "100%", height: "500px" }}>
         <button onClick={createChannel}>Create New Channel</button>
         <ChannelList
           onChannelSelect={(channel) => {
@@ -134,13 +137,15 @@ const Chatbox = () => {
           }}
         />
       </div>
+
       <div className="channel-chat" ref={channelChatRef}>
         <div className="message-list">
           {currentChannel ? (
             messages.length > 0 ? (
               messages.map((msg, index) => (
                 <div key={index} className="message-item">
-                  <strong>{msg.sender.nickname || msg.sender.userId}</strong>: {msg.message}
+                  <strong>{msg.sender.nickname || msg.sender.userId}</strong>:{" "}
+                  {msg.message}
                 </div>
               ))
             ) : (
@@ -157,14 +162,22 @@ const Chatbox = () => {
               placeholder="Enter message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), sendMessage())}
+              onKeyPress={(e) =>
+                e.key === "Enter" &&
+                !e.shiftKey &&
+                (e.preventDefault(), sendMessage())
+              }
               rows="1"
             ></textarea>
             <button onClick={sendMessage}>Send</button>
           </div>
         )}
       </div>
-      {showSettings && (
+</div>
+
+      
+
+      {/* {showSettings && (
         <div className="channel-settings">
           <ChannelSettings
             channelUrl={currentChannel ? currentChannel.url : ""}
@@ -174,8 +187,14 @@ const Chatbox = () => {
             }}
           />
         </div>
-      )}
-    </div>
+      )} */}
+
+      {/* <div className="channel-wrap">
+      
+      
+      
+    </div> */}
+    </>
   );
 };
 
