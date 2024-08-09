@@ -25,7 +25,7 @@
 .menu-content {
   position: relative;
   z-index: 1;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .menu-content h1 {
@@ -49,9 +49,3 @@
 }
 
 
-.chat-box {
-  /* Add any additional styles for chatbox placement here */
-  position: absolute;
-  bottom: 50px; /* Adjust as necessary */
-  right: 20px; /* Adjust as necessary */
-}
