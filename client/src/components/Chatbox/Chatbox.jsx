@@ -16,6 +16,10 @@ const Chatbox = () => {
 
   // Initialize the SendBird SDK and connect the user
   useEffect(() => {
+    console.log("App ID:", appId);
+    console.log("User ID:", userId);
+    console.log("Nickname:", nickname);
+
     if (!appId || !userId || !nickname) {
       console.error("App ID, User ID, or Nickname is not defined.");
       return;
