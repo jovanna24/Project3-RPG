@@ -1,17 +1,33 @@
-/* .App{
-    height: 100vh;
-    width: 100vw;
-}
 
-.channel-wrap{
+  
+  .channel-wrap {
     display: flex;
     height: 100%;
-}
-
-.channel-list{
-    float: left;
-}
-
-.channel-chat{
+    background-color: gray;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  .channel-list {
+    width: 500px; /* Adjusted width for list */
+  }
+  
+  .channel-chat {
     width: 76%;
-} */
+    transition: width 0.3s; /* Smooth transition for width change */
+  }
+  
+  .channel-chat.with-settings {
+    width: 52%;
+  }
+  
+  .channel-settings {
+    position: absolute; /* Makes it overlay */
+    right: 0;
+    width: 24%; /* Same as channel-list width */
+    height: 100%;
+    background-color: #f0f0f0; /* Optional background color */
+    border-left: 1px solid #ddd; /* Optional border */
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1); /* Optional shadow for better visual separation */
+  }
+  
