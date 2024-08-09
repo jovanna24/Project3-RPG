@@ -4,18 +4,20 @@
   height: 500px;
   width: 100%;
   overflow: scroll;
+  border-radius: 10px;
 }
 
 .channel-wrap button{
   color: white;
   background-color: transparent;
+  border-radius: 50%;
 }
 
- .channel-settings{
-  display: none;
- }
+.channel-chat{
+  width: 300px;
+}
 
-/* Optional: Adjustments for mobile view */
+
 @media (max-width: 768px) {
   .channel-wrap {
     display: flex;

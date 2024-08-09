@@ -16,9 +16,11 @@ const Chatbox = () => {
   };
 
   const hideSettingsBar = () => {
-    channelChatDiv.style.width = "76%";
-    channelChatDiv.style.float = "right";
-  }
+    if (channelChatRef.current) {
+      channelChatRef.current.style.width = "100%";
+      channelChatRef.current.style.float = "none";
+    }
+  };
 
   return (
     <div className="channel-wrap">
@@ -45,7 +47,7 @@ const Chatbox = () => {
             channelUrl={currentChannelURL}
             onBackClick={() => {
               setShowSettings(false);
-              renderSettingsBar();
+              hideSettingsBar();
             }}
           />
         </div>
