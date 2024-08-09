@@ -1,17 +1,14 @@
-// src/components/MainMenu.jsx
 import React, { useEffect, useState } from 'react';
 import '../styles/mainMenu.css';
-import ChatBox from '../components/Chatbox/Chatbox'; // Import the ChatBox component
-import AuthService from '../utils/auth'; // Update to use AuthService
+import Chatbox from '../components/Chatbox/Chatbox';
+import AuthService from '../utils/auth';
 import { SendBirdProvider } from "@sendbird/uikit-react";
-import Chatbox from "../components/Chatbox/Chatbox.jsx";
 
 function MainMenu({ onStartGame }) {
-  const [isChatOpen, setIsChatOpen] = useState(false); // State to track if the ChatBox is open
-  const [isAuthenticated, setIsAuthenticated] = useState(AuthService.loggedIn()); // Use AuthService to check authentication
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(AuthService.loggedIn());
 
   useEffect(() => {
-    // Set authentication state based on the current token
     setIsAuthenticated(AuthService.loggedIn());
   }, []);
 
@@ -20,8 +17,8 @@ function MainMenu({ onStartGame }) {
   };
 
   const handleLogout = () => {
-    AuthService.logout(); // Properly handle logout
-    setIsAuthenticated(false); // Update authentication state
+    AuthService.logout();
+    setIsAuthenticated(false);
   };
 
   const APP_ID = import.meta.env.VITE_APP_ID;
@@ -36,25 +33,25 @@ function MainMenu({ onStartGame }) {
         Your browser does not support the video tag.
       </video>
       <div className="menu-content">
-        
-      <SendBirdProvider appId={APP_ID} userId={USER_ID}>
-        <h1>INTERACTIVE RPG</h1>
-        {isAuthenticated ? (
-          <>
-            <button onClick={onStartGame}>Survive</button>
-            <button onClick={toggleChat}>
-              {isChatOpen ? 'Close Chat' : 'Open Chat'}
-            </button>
-            <button onClick={handleLogout}>Logout</button> 
-          </>
-        ) : (
-          <p>Please log in to access the game and chat.</p> // Message for unauthenticated users
-        )}
-      {isChatOpen && <ChatBox />} {/* Conditionally render ChatBox */}
-      </SendBirdProvider>
-    </div>
+        <SendBirdProvider appId={APP_ID} userId={USER_ID} nickname={NICKNAME} accessToken={ACCESS_TOKEN}>
+          <h1>INTERACTIVE RPG</h1>
+          {isAuthenticated ? (
+            <>
+              <button onClick={onStartGame}>Survive</button>
+              <button onClick={toggleChat}>
+                {isChatOpen ? 'Close Chat' : 'Open Chat'}
+              </button>
+              <button onClick={handleLogout}>Logout</button> 
+            </>
+          ) : (
+            <p>Please log in to access the game and chat.</p>
+          )}
+          {isChatOpen && <Chatbox />}
+        </SendBirdProvider>
+      </div>
     </div>
   );
 }
+console.log(import.meta.env);
 
 export default MainMenu;
