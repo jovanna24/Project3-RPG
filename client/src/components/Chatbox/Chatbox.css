@@ -1,33 +1,34 @@
+.channel-wrap {
+  display: flex;
+  height: 100%;
+  background-color: aliceblue;
+  color: black;
+}
 
-  
-  .channel-wrap {
-    display: flex;
-    height: 100%;
-    background-color: gray;
-    height: 100vh;
-    width: 100%;
-  }
-  
-  .channel-list {
-    width: 500px; /* Adjusted width for list */
-  }
-  
-  .channel-chat {
-    width: 76%;
-    transition: width 0.3s; /* Smooth transition for width change */
-  }
-  
-  .channel-chat.with-settings {
-    width: 52%;
-  }
-  
-  .channel-settings {
-    position: absolute; /* Makes it overlay */
-    right: 0;
-    width: 24%; /* Same as channel-list width */
-    height: 100%;
-    background-color: #f0f0f0; /* Optional background color */
-    border-left: 1px solid #ddd; /* Optional border */
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1); /* Optional shadow for better visual separation */
-  }
-  
+.channel-list {
+  width: 24%;
+  background-color: azure;
+  overflow-y: auto;
+  color: black;
+}
+
+.channel-chat {
+  width: 76%;
+  background-color: white;
+  transition: width 0.3s ease;
+  position: relative;
+  color: black;
+}
+
+.channel-settings {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 48%;
+  height: 100%;
+  background-color: #f1f1f1;
+  z-index: 2;
+  transition: width 0.3s ease;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  color: black;
+}

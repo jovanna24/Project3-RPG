@@ -1,9 +1,8 @@
-// src/components/MainMenu.jsx
 import React, { useEffect, useState } from 'react';
 import '../styles/mainMenu.css';
+import Chatbox from '../components/Chatbox/Chatbox';
 import AuthService from '../utils/auth';
-import { SendBirdProvider } from '@sendbird/uikit-react';
-import Chatbox from '../components/Chatbox/Chatbox.jsx';
+import { SendBirdProvider } from "@sendbird/uikit-react";
 
 function MainMenu({ onStartGame }) {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -22,8 +21,9 @@ function MainMenu({ onStartGame }) {
     setIsAuthenticated(false);
   };
 
-  const APP_ID = import.meta.env.VITE_APP_ID;  // Use VITE environment variables
+  const APP_ID = import.meta.env.VITE_APP_ID;
   const USER_ID = import.meta.env.VITE_USER_ID;
+  const NICKNAME = import.meta.env.VITE_NICKNAME;
   const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
 
   return (
@@ -33,24 +33,25 @@ function MainMenu({ onStartGame }) {
         Your browser does not support the video tag.
       </video>
       <div className="menu-content">
-        <h1>INTERACTIVE RPG</h1>
-        <SendBirdProvider appId={APP_ID} userId={USER_ID} accessToken={ACCESS_TOKEN}>
+        <SendBirdProvider appId={APP_ID} userId={USER_ID} nickname={NICKNAME} accessToken={ACCESS_TOKEN}>
+          <h1>INTERACTIVE RPG</h1>
           {isAuthenticated ? (
             <>
               <button onClick={onStartGame}>Survive</button>
               <button onClick={toggleChat}>
                 {isChatOpen ? 'Close Chat' : 'Open Chat'}
               </button>
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout}>Logout</button> 
             </>
           ) : (
             <p>Please log in to access the game and chat.</p>
           )}
-          {isChatOpen && <Chatbox />}  {/* Conditionally render Chatbox */}
+          {isChatOpen && <Chatbox />}
         </SendBirdProvider>
       </div>
     </div>
   );
 }
+console.log(import.meta.env);
 
 export default MainMenu;
