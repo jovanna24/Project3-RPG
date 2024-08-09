@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import '../styles/mainMenu.css';
 import ChatBox from '../components/Chatbox/Chatbox'; // Import the ChatBox component
 import AuthService from '../utils/auth'; // Update to use AuthService
+import { SendBirdProvider } from "@sendbird/uikit-react";
+import Chatbox from "../components/Chatbox/Chatbox.jsx";
 
 function MainMenu({ onStartGame }) {
   const [isChatOpen, setIsChatOpen] = useState(false); // State to track if the ChatBox is open
@@ -22,6 +24,11 @@ function MainMenu({ onStartGame }) {
     setIsAuthenticated(false); // Update authentication state
   };
 
+  const APP_ID = import.meta.env.VITE_APP_ID;
+  const USER_ID = import.meta.env.VITE_USER_ID;
+  const NICKNAME = import.meta.env.VITE_NICKNAME;
+  const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
+
   return (
     <div className="main-menu">
       <video className="background-video-main" autoPlay muted loop>
@@ -29,6 +36,8 @@ function MainMenu({ onStartGame }) {
         Your browser does not support the video tag.
       </video>
       <div className="menu-content">
+        
+      <SendBirdProvider appId={APP_ID} userId={USER_ID}>
         <h1>INTERACTIVE RPG</h1>
         {isAuthenticated ? (
           <>
@@ -41,8 +50,9 @@ function MainMenu({ onStartGame }) {
         ) : (
           <p>Please log in to access the game and chat.</p> // Message for unauthenticated users
         )}
-      </div>
       {isChatOpen && <ChatBox />} {/* Conditionally render ChatBox */}
+      </SendBirdProvider>
+    </div>
     </div>
   );
 }
