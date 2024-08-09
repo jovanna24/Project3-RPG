@@ -3,14 +3,8 @@ import '../styles/mainMenu.css';
 import Chatbox from '../components/Chatbox/Chatbox';
 import AuthService from '../utils/auth';
 import { SendBirdProvider } from "@sendbird/uikit-react";
-import { App as SendbirdApp } from '@sendbird/uikit-react';
-import '@sendbird/uikit-react/dist/index.css';
 
 function MainMenu({ onStartGame }) {
-
-  const appId = import.meta.env.VITE_APP_ID;
-  const userId = import.meta.env.VITE_USER_ID;
-
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(AuthService.loggedIn());
 
@@ -58,6 +52,6 @@ function MainMenu({ onStartGame }) {
     </div>
   );
 }
-
+console.log(import.meta.env);
 
 export default MainMenu;
