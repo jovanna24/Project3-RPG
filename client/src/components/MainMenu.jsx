@@ -52,6 +52,6 @@ function MainMenu({ onStartGame }) {
     </div>
   );
 }
-console.log(import.meta.env);
+
 
 export default MainMenu;
