@@ -28,30 +28,10 @@ export const getMe = async (token) => {
     });
   };
   
-  // Game Data Management
-  export const saveGameState = async (gameData, token) => {
-    return fetch('api/game-state', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(gameData),
-    });
-  };
-  
-  export const getGameState = async (token) => {
-    return fetch('api/game-state', {
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
-      },
-    });
-  };
   
   // Chat API (Using react-chat-engine)
-  export const sendMessage = async (projectID, chatID, message, token) => {
-    return apiRequest(`/chats/${chatID}/messages`, {
+  export const sendMessage = async (projectID, chatId, message, token) => {
+    return apiRequest(`/chats/${chatId}/messages`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

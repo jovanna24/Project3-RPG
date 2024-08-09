@@ -1,7 +1,7 @@
 const Chat = require('../models/Chat');
 const ChatMessage = require('../models/ChatMessage');
-const GameState = require('../models/GameState');
 const User = require('../models/User');
+const { signToken } = require('../utils/auth');
 
 // const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc'); // Adding stripe for payements from users -Mustafa
 
@@ -25,14 +25,15 @@ const resolvers = {
         throw new Error(err);
       }
     },
-    getChat: async (_, { id }) => {
-      return await Chat.findById(id).populate('participants');
+    getChat: async (_, { _id }) => {
+      return await Chat.findById(_id).populate('participants');
     },
-    getChatMessages: async (_, { chatID }) => {
-      return await ChatMessage.find({ chatID }).populate('sender');
-    },
-    getGameState: async (_, { userId }) => {
-      return await GameState.findOne({ user: userId });
+    getChatMessages: async (_, { chatId }) => {
+      try {
+        return await ChatMessage.find({ chatId }).populate('sender');
+      } catch (err) {
+        throw new Error(err.message);
+      }
     },
 
   },
@@ -78,18 +79,18 @@ const resolvers = {
   */
 
   Mutation: {
-    addUser: async (_, { username, email, password, bio, avatar }) => {
+    addUser: async(_, { userInput }) => {
+      console.log(userInput);
       try {
-        const user = await User.create({ username, email, password, bio, avatar });
+        const user = await User.create(userInput);
+        if (!user) {
+          throw new Error('User not created');
+        }
         const token = signToken(user);
         return { token, user };
       } catch (err) {
         throw new Error(err.message);
       }
-    },
-
-    updateUser: async (_, { _id, username, email, bio, avatar }) => {
-      return await User.findByIdAndUpdate(_id, { username, email, bio, avatar }, { new: true });
     },
 
     login: async (_, { usernameOrEmail, password }) => {
@@ -112,19 +113,20 @@ const resolvers = {
     },
 
     createChat: async (_, { name, participants }) => {
-      const chat = new Chat({ name, participants });
-      return await chat.save();
+      try {
+        const chat = new Chat({ name, participants });
+        return await chat.save();
+      } catch (error) {
+        throw new Error(error.message);
+      }
     },
-    sendMessage: async (_, { chatID, sender, text }) => {
-      const message = new ChatMessage({ chatID, sender, text });
-      return await message.save();
-    },
-    updateGameState: async (_, { userId, level, score }) => {
-      return await GameState.findOneAndUpdate(
-        { user: userId },
-        { level, score, lastSaved: Date.now() },
-        { new: true, upsert: true }
-      );
+    sendMessage: async (_, { chatId, sender, text }) => {
+      try {
+        const message = new ChatMessage({ chatId, sender, text });
+        return await message.save();
+      } catch (err) {
+        throw new Error(err.message);
+      }
     },
     updateUser: async (_, { id, username, email, password, user }) => {
       return await User.findByIdAndUpdate(id, { username, email, password, user }, { new: true });

@@ -1,3 +1,4 @@
+// auth middleware
 const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
 

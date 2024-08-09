@@ -40,11 +40,27 @@ export const UPDATE_USER = gql`
 export const DELETE_USER = gql`
   mutation DeleteUser($id: ID!) {
     deleteUser(id: $id) {
-      id
+      _id
       username
     }
   }
 `;
+
+export const SEND_MESSAGE = gql`
+mutation SendMessage($chatId: ID!, $sender: ID!, $text: String!) {
+  sendMessage(chatId: $chatId, sender: $sender, text: $text) {
+    _id
+    text
+    sender {
+      _id
+      username
+    }
+    timestamp
+    chatId
+  }
+}
+`;
+
 
 
 

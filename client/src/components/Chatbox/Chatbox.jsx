@@ -1,39 +1,55 @@
-// ChatBox.jsx
-import React, { useState } from 'react';
+import { ChannelList, Channel, ChannelSettings } from "@sendbird/uikit-react";
+import { useState, useRef } from "react";
 import './Chatbox.css';
 
-const ChatBox = () => {
-    const [messages, setMessages] = useState([]);
-    const [input, setInput] = useState('');
+const Chatbox = () => {
 
-    const handleSendMessage = () => {
-        if (input.trim()) {
-            setMessages([...messages, input]);
-            setInput('');
-        }
-    };
+  const [currentChannel, setCurrentChannel] = useState(null);
+  const currentChannelUrl = currentChannel ? currentChannel.url : "";
+  const [showSettings, setShowSettings] = useState(false);
+  const channelChatRef = useRef(null);
 
-    return (
-        <div className="chat-box open">
-            <div className="chat-content">
-                <div className="messages">
-                    {messages.map((msg, index) => (
-                        <div key={index} className="message">
-                            {msg}
-                        </div>
-                    ))}
-                </div>
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                    placeholder="Type a message..."
-                />
-                <button onClick={handleSendMessage}>Send</button>
-            </div>
+  const renderSettingsBar = () => {
+    channelChatDiv.style.width = "52%";
+    channelChatDiv.style.cssFloat = "left";
+  }
+
+  const hideSettingsBar = () => {
+    channelChatDiv.style.width = "76%";
+    channelChatDiv.style.float = "right"; 
+  }
+
+  return (
+    <div className = "channel-wrap">
+      <div className="channel-list">
+        <ChannelList
+          onChannelSelect={(channel) => {
+            setCurrentChannel(channel);
+          }}
+        />
+      </div>
+      <div className="channel-chat">
+        <Channel
+          channelUrl={currentChannelUrl}
+          onChatHeaderActionClick={() => {
+            setShowSettings(!setShowSettings);
+            renderSettingsBar();
+          }}
+        />
+      </div>
+      {showSettings && (
+        <div className="channel-settings">
+          <ChannelSettings
+            channel={currentChannelUrl}
+            onCloseClick = {()=> {
+              setShowSettings(false);
+              hideSettingsBar();
+            }}
+          />
         </div>
-    );
-};
+      )}
+    </div>
+  )
+}
 
-export default ChatBox;
+export default Chatbox

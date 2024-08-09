@@ -5,13 +5,14 @@ import User from "../../assets/User.svg";
 import { useState, useEffect } from "react";
 import SignUpForm from '../SignupForm/SignupForm.jsx';
 import LoginForm from '../LoginForm/LoginForm.jsx';
+import auth from "../../utils/auth";
 
 const Navbar = () => {
-    const [menu, setMenu] = useState("home");
-    const [token, setToken] = useState(null);
+    const [menu, setMenu] = useState("home"); // State to track which menu is active
+    const [token, setToken] = useState(auth.getToken()); // Get token from local storage
     const [showLogin, setShowLogin] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Use navigate hook from react-router-dom
 
     useEffect(() => {
         const savedToken = localStorage.getItem("token");
@@ -19,12 +20,6 @@ const Navbar = () => {
             setToken(savedToken);
         }
     }, []);
-
-    const logout = () => {
-        localStorage.removeItem("token");
-        setToken(null);
-        navigate("/");
-    };
 
     const handleLoginClose = () => {
         setShowLogin(false);
@@ -81,10 +76,10 @@ const Navbar = () => {
                     <div className="navbar-profile">
                         <img src={User} alt="user" />
                         <ul className="nav-profile-dropdown">
-                            <hr />
-                            <li onClick={logout}>
+                            {/* <hr /> */}
+                            {/* <li onClick={logout}>
                                 <p>Logout</p>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 )}

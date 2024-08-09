@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import './SignupForm.css';
+
 const SignupForm = () => {
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   const [validated, setValidated] = useState(false);
@@ -35,9 +36,9 @@ const SignupForm = () => {
         },
       });
 
-      const { token } = data.createUser;
+      const { token } = data.addUser;
       Auth.login(token);
-      setUserFormData({ username: '', email: '', password: '', bio: '', avatar: ''  }); // Clear form only on success
+      setUserFormData({ username: '', email: '', password: '' }); // Clear form only on success
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -59,7 +60,7 @@ const SignupForm = () => {
           value={userFormData.username}
           required
         />
-        <Form.Control.Feedback type='invalid'>Username is required!</Form.Control.Feedback>
+        {/* <Form.Control.Feedback type='invalid'>Username is required!</Form.Control.Feedback> */}
       </Form.Group>
       <Form.Group className='mb-3'>
         <Form.Label htmlFor='email'>Email</Form.Label>
@@ -71,7 +72,7 @@ const SignupForm = () => {
           value={userFormData.email}
           required
         />
-        <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
+        {/* <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback> */}
       </Form.Group>
       <Form.Group className='mb-3'>
         <Form.Label htmlFor='password'>Password</Form.Label>
@@ -83,9 +84,10 @@ const SignupForm = () => {
           value={userFormData.password}
           required
         />
-        <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
+        {/* <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback> */}
       </Form.Group>
       <Button
+        className='btn-success'
         disabled={!(userFormData.username && userFormData.email && userFormData.password)}
         type='submit'
         variant='success'>
