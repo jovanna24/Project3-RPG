@@ -3,7 +3,7 @@
   height: calc(32px * var(--pixel-size));
   overflow: hidden;
   position: relative;
-  top: 50px;
+  top: 0px;
 
   
 }
@@ -13,7 +13,7 @@
   height: calc(32px * var(--pixel-size));
   overflow: hidden; /* Changed to visible to show the dead character */
   position: relative;
-  top: 50px;
+  top: 0px;
    /* Adjust this to ensure the dead character is within view */
 }
 

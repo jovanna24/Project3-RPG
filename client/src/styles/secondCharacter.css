@@ -1,12 +1,13 @@
-/* secondCharacter.css */
 .SecondCharacter {
   width: calc(48px * var(--pixel-size));
   height: calc(48px * var(--pixel-size));
   overflow: hidden;
-  position: absolute; /* Ensure proper positioning */
+  position: absolute;
   transition: transform 4s ease-in-out;
+  top: 100px;
 }
 
+/* Default styles for larger screens */
 .SecondCharacter.right {
   left: -300px; /* Start from the left for the right-facing skeleton */
 }
@@ -23,22 +24,68 @@
   transform: translateX(-1100px); /* Move to final position from right */
 }
 
+/* Styles for screen widths 1668px and above */
+@media screen and (min-width: 1668px) {
+  .SecondCharacter.left {
+    right: -450px; /* Adjusted for larger screens */
+  }
+  
+  .SecondCharacter.enter.left {
+    transform: translateX(-1200px); /* Adjusted movement distance */
+  }
+  
+  .SecondCharacter.enter.right {
+    transform: translateX(1200px); /* Adjusted movement distance */
+  }
+}
+
+/* Styles for screen widths between 768px and 1667px */
+@media screen and (min-width: 768px) and (max-width: 1667px) {
+  .SecondCharacter.left {
+    right: -650px; /* Adjusted for medium screens */
+  }
+  
+  .SecondCharacter.enter.left {
+    transform: translateX(-950px); /* Adjusted movement distance */
+  }
+  
+  .SecondCharacter.enter.right {
+    transform: translateX(950px); /* Adjusted movement distance */
+  }
+}
+
+/* Styles for screen widths 767px and below */
+@media screen and (max-width: 767px) {
+  .SecondCharacter.left {
+    right: -400px; /* Adjusted for smaller screens */
+  }
+  
+  .SecondCharacter.enter.left {
+    transform: translateX(-500px); /* Adjusted movement distance */
+  }
+  
+  .SecondCharacter.enter.right {
+    transform: translateX(500px); /* Adjusted movement distance */
+  }
+}
+
+/* Styles for screen widths 480px and below */
+@media screen and (max-width: 480px) {
+  .SecondCharacter.left {
+    right: -300px; /* Adjusted for very small screens */
+  }
+  
+  .SecondCharacter.enter.left {
+    transform: translateX(-300px); /* Adjusted movement distance */
+  }
+  
+  .SecondCharacter.enter.right {
+    transform: translateX(300px); /* Adjusted movement distance */
+  }
+}
+
 .SecondCharacter_spritesheet {
   animation: moveSpritesheet 1s steps(4) infinite;
   width: 3000px;
   position: absolute;
-}
-
-@media (max-width: 768px) {
-  button {
-      padding: 8px 16px;
-      font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  button {
-      padding: 6px 12px;
-      font-size: 0.8rem;
-  }
 }
