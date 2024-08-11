@@ -7,6 +7,7 @@ const Chatbox = () => {
   const currentChannelURL = currentChannel ? currentChannel.url : "";
   const [showSettings, setShowSettings] = useState(false);
   const channelChatRef = useRef(null);
+  
 
   const renderSettingsBar = () => {
     if (channelChatRef.current) {
@@ -19,6 +20,10 @@ const Chatbox = () => {
     channelChatDiv.style.width = "76%";
     channelChatDiv.style.float = "right";
   }
+
+  console.log('current channel', currentChannel);
+  console.log('Current Channel Ref', channelChatRef);
+  console.log('show settings', showSettings);
 
   return (
     <div className="channel-wrap">
