@@ -1,86 +1,64 @@
-const Chat = require('../models/Chat');
-const ChatMessage = require('../models/ChatMessage');
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 const User = require('../models/User');
 const { signToken } = require('../utils/auth');
+const { GraphQLScalarType, Kind } = require('graphql');
 
-// const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc'); // Adding stripe for payements from users -Mustafa
+// Define the Date scalar
+const DateScalar = new GraphQLScalarType({
+  name: 'Date',
+  description: 'Custom scalar type for date',
+  parseValue(value) {
+    return new Date(value); // Convert incoming integer to Date
+  },
+  serialize(value) {
+    return value.getTime(); // Convert Date to timestamp for the client
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.INT) {
+      return new Date(parseInt(ast.value, 10)); // Convert AST to Date
+    }
+    return null;
+  },
+});
 
 const resolvers = {
+  Date: DateScalar, // Include the Date scalar in resolvers
+
   Query: {
     me: async (__, _, { user }) => {
-      const foundUser = await User.findOne({ _id: user._id });
-      return foundUser;
-    }, 
+      if (!user || !ObjectId.isValid(user._id)) {
+        throw new Error('Invalid user ID');
+      }
+      return await User.findById(user._id);
+    },
 
-    getSingleUser: async (_, { userId, username}, { user }) => {
+    getSingleUser: async (_, { userId, username }) => {
       try {
+        const validUserId = userId && ObjectId.isValid(userId) ? userId : null;
         const foundUser = await User.findOne({
-          $or: [{ _id: userId ? userId: user._id }, { username: username }],
+          $or: [{ _id: validUserId }, { username }],
         });
         if (!foundUser) {
           throw new Error('User not found');
         }
         return foundUser;
       } catch (err) {
-        throw new Error(err);
+        throw new Error(err.message);
       }
-    },
-    getChat: async (_, { _id }) => {
-      return await Chat.findById(_id).populate('participants');
-    },
-    getChatMessages: async (_, { chatId }) => {
+    },    
+    
+    getAllUsers: async () => {
       try {
-        return await ChatMessage.find({ chatId }).populate('sender');
+        return await User.find();
       } catch (err) {
         throw new Error(err.message);
       }
     },
-
   },
-
-  /*
-  Will add checkout resolver here -- Mustafa
- checkout: async (parent, args, context) => {
-      const url = new URL(context.headers.referer).origin;
-      // We map through the list of products sent by the client to extract the _id of each item and create a new Order.
-      await Order.create({ products: args.products.map(({ _id }) => _id) });
-      const line_items = [];
-
-      for (const product of args.products) {
-        line_items.push({
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: product.name,
-              description: product.description,
-              images: [`${url}/images/${product.image}`],
-            },
-            unit_amount: product.price * 100,
-          },
-          quantity: product.purchaseQuantity,
-        });
-      }
-
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items,
-        mode: 'payment',
-        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`,
-      });
-
-      return { session: session.id };
-    },
-  },
-
-
-
-
-  */
 
   Mutation: {
-    addUser: async(_, { userInput }) => {
-      console.log(userInput);
+    addUser: async (_, { userInput }) => {
       try {
         const user = await User.create(userInput);
         if (!user) {
@@ -112,24 +90,19 @@ const resolvers = {
       }
     },
 
-    createChat: async (_, { name, participants }) => {
+    updateUser: async (_, { _id, username, email, password }) => {
       try {
-        const chat = new Chat({ name, participants });
-        return await chat.save();
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    },
-    sendMessage: async (_, { chatId, sender, text }) => {
-      try {
-        const message = new ChatMessage({ chatId, sender, text });
-        return await message.save();
+        if (!ObjectId.isValid(_id)) {
+          throw new Error('Invalid user ID');
+        }
+        const updateData = { username, email };
+        if (password) {
+          updateData.password = password;
+        }
+        return await User.findByIdAndUpdate(_id, updateData, { new: true });
       } catch (err) {
         throw new Error(err.message);
       }
-    },
-    updateUser: async (_, { id, username, email, password, user }) => {
-      return await User.findByIdAndUpdate(id, { username, email, password, user }, { new: true });
     },
   },
 };

@@ -1,13 +1,16 @@
 import { gql } from '@apollo/client'; // Import gql from Apollo Client
 
 export const GET_USER = gql`
-  query GetUser($id: ID!) {
-    user(_id: $id) {
-      _id
-      username
-      email
-    }
+query Me {
+  me {
+    _id
+    username
+    email
+    bio
+    avatar
+    createdAt
   }
+}
 `;
 
 export const GET_ALL_USERS = gql`
@@ -36,17 +39,5 @@ query GetChatMessages($chatId: ID!) {
 }
 `;
 
-export const GET_USER_PROFILE = gql`
-  query GetUserProfile {
-    me {
-      _id
-      username
-      email
-      profile {
-        bio
-        avatar
-      }
-    }
-  }
-`;
+
 
