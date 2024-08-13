@@ -6,6 +6,7 @@
     z-index: 2;
     /* opacity: 0.5; */
     display: none;
+    cursor: pointer;
   }
   
   .modal-header {
@@ -16,6 +17,7 @@
   
   .modal-body {
     margin: 10px;
+    text-align: center;
   } 
   
   .modal-content {
@@ -31,6 +33,16 @@
     top: 50%;
     left:50%;
     transform: translate(-50%, -50%);
+  }
+
+
+  .modal-content button {
+    color: white; 
+    background-color: green;
+    border: none; 
+    border-radius: 4px;
+    padding: 3px;
+    cursor: pointer;
   }
   
   .close-modal {
