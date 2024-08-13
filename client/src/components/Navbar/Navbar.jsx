@@ -35,7 +35,11 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <Link to="/">
+      <Link
+        to="/"
+        onClick={() => setMenu("home")}
+        className={menu === "home" ? "active" : ""}
+      >
         <img src={Logo} alt="logo" className="navbar-logo" />
       </Link>
       <ul className="navbar-menu">
