@@ -42,7 +42,7 @@ const SignupForm = ({setShowModal, setModalContent}) => {
     } catch (err) {
       console.error(err);
       setShowModal(true);
-      setModalContent({title: 'Error', body: 'Something went wrong with your signup! Make sure your username, email, and password are valid.'});
+      setModalContent({title: 'Error', body: 'Username or email already in use!'});
       // setShowAlert(true);
     }
   };
