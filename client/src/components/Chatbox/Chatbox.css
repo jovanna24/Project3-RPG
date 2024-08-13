@@ -28,15 +28,12 @@
 
   }
   .channel-list {
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
+    display: none;
   }
 
   .channel-chat {
-    width: 100%;
-    height: calc(100vh - 60px); /* Adjust based on your header/footer */
+    width: 100vw;
+    padding: 0 10px;
   }
 
   .channel-settings {

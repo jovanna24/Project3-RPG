@@ -13,7 +13,7 @@
 }
 
 .footer-content{
-    width: 100%;
+    /* width: 100%; */
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     gap: 80px;
@@ -50,11 +50,16 @@
     text-align: center;
 }
 
-@media (max0width: 750px) {
+@media (max-width: 768px) {
+    .footer{
+        padding: 5px 0;
+    }
     .footer-content{
-        display: flex;
-        flex-direction: column;
-        gap: 35px;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .footer-logo{
+        width: 80px;
     }
     .footer-copyright{
         text-align: center;
