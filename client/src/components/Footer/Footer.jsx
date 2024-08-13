@@ -3,7 +3,8 @@ import Logo from "../../assets/Logo.svg";
 import Ig_Icon from "../../assets/ig_icon.svg";
 import X_icon from "../../assets/x_icon.svg";
 import LinkedIn_icon from "../../assets/linkedin_icon.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Footer = () => {
 
