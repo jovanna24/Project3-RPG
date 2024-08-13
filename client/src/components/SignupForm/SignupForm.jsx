@@ -5,10 +5,10 @@ import { ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import './SignupForm.css';
 
-const SignupForm = () => {
+const SignupForm = ({setShowModal, setModalContent}) => {
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   const [validated, setValidated] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+  // const [showAlert, setShowAlert] = useState(false);
 
   const [addUserMutation] = useMutation(ADD_USER);
 
@@ -41,15 +41,17 @@ const SignupForm = () => {
       setUserFormData({ username: '', email: '', password: '' }); // Clear form only on success
     } catch (err) {
       console.error(err);
-      setShowAlert(true);
+      setShowModal(true);
+      setModalContent({title: 'Error', body: 'Something went wrong with your signup!'});
+      // setShowAlert(true);
     }
   };
 
   return (
     <Form noValidate validated={validated} onSubmit={handleFormSubmit} className='signup-form'>
-      <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+      {/* <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
         Something went wrong with your signup!
-      </Alert>
+      </Alert> */}
       <Form.Group className='mb-3'>
         <Form.Label htmlFor='username'>Username</Form.Label>
         <Form.Control

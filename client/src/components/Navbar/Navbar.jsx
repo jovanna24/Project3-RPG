@@ -7,7 +7,7 @@ import SignUpForm from "../SignupForm/SignupForm.jsx";
 import LoginForm from "../LoginForm/LoginForm.jsx";
 import auth from "../../utils/auth";
 
-const Navbar = () => {
+const Navbar = ({setShowModal, setModalContent}) => {
   const [menu, setMenu] = useState("home");
   const [token, setToken] = useState(auth.getToken());
   const [showLogin, setShowLogin] = useState(false);
@@ -35,7 +35,11 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <Link to="/">
+      <Link
+        to="/"
+        onClick={() => setMenu("home")}
+        className={menu === "home" ? "active" : ""}
+      >
         <img src={Logo} alt="logo" className="navbar-logo" />
       </Link>
       <ul className="navbar-menu">
@@ -107,7 +111,7 @@ const Navbar = () => {
       </div>
 
       {showLogin && <LoginForm onClose={handleLoginClose} />}
-      {showSignUp && <SignUpForm onClose={handleSignUpClose} />}
+      {showSignUp && <SignUpForm onClose={handleSignUpClose} setShowModal={setShowModal} setModalContent={setModalContent}/>}
     </div>
   );
 };
