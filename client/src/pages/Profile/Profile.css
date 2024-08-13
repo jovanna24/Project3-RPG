@@ -1,0 +1,32 @@
+.profile-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding-bottom: 200px;
+  background-color: rgba(18, 74, 18, 0.419);
+}
+
+.profile-container h2{
+  font-size: 50px;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+} 
+
+.profile-details p{
+  color: white;
+}

@@ -1,8 +1,8 @@
 {
-    "name": "server",
+    "name": "project3-rpg",
     "version": "1.0.0",
-    "description": "",
-    "main": "server.js",
+    "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+    "main": "Backend/server.js",
     "scripts": {
         "start": "node server.js",
         "seed": "node seeds/seed.js",
@@ -11,16 +11,28 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@apollo/client": "^3.7.5",
         "@apollo/server": "^4.7.1",
+        "@sendbird/chat": "^4.14.0",
+        "@sendbird/uikit-react": "^3.14.14",
+        "@weavy/uikit-react": "^24.0.2",
+        "apollo-server": "^3.13.0",
         "apollo-server-express": "^3.6.2",
-        "bcrypt": "^5.1.1",
+        "axios": "^1.7.3",
+        "bcrypt": "^5.0.0",
+        "cors": "^2.8.5",
         "dotenv": "^16.4.5",
         "express": "^4.17.2",
         "graphql": "^16.6.0",
         "jsonwebtoken": "^8.5.1",
-        "mongoose": "^7.0.2"
+        "jwt-decode": "^4.0.0",
+        "mongodb": "^6.8.0",
+        "mongoose": "^7.0.2",
+        "multer": "^1.4.5-lts.1",
+        "react-bootstrap": "^2.10.4",
+        "sendbird": "^3.1.33"
     },
     "devDependencies": {
-        "nodemon": "^2.0.6"
+        "concurrently": "^8.2.2"
     }
 }
