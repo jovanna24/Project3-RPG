@@ -9,6 +9,8 @@ import {
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import { setContext } from "@apollo/client/link/context";
+import Modal from "./components/Modal/Modal.jsx";
+import { useState } from "react";
 
 
 
@@ -36,11 +38,17 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({
+    title: "Test",
+    body: "Hello",
+  }); 
 
   return (
     <ApolloProvider client={client}>
           <div className="flex-column justify-center align-center min-100-vh bg-primary">
-            <Navbar />
+            <Modal setShowModal={setShowModal} title={modalContent.title} body={modalContent.body} showModal={showModal} setShowModal={setShowModal}/>
+            <Navbar setShowModal={setShowModal} setModalContent={setModalContent}/>
             <div className="container">
               <Outlet />
             </div>
